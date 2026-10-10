@@ -202,6 +202,16 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 .gfx-cat-link .arrow{transition:transform .25s}
 .gfx-cat:hover .gfx-cat-link .arrow{transform:translateX(5px)}
 @media(max-width:640px){.gfx-cat-body{padding:14px}.gfx-cat-body h3{font-size:16px}.gfx-cat-body p{font-size:12.5px}}
+.nav-toggle{display:none;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--ink);align-items:center;justify-content:center;cursor:pointer;transition:all .25s}
+.nav-toggle svg{width:20px;height:20px}
+.nav-toggle:hover{background:var(--emerald);color:#0A0F1C;border-color:var(--emerald)}
+@media(max-width:760px){
+.nav-toggle{display:inline-flex}
+.nav-links{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);box-shadow:0 20px 40px -10px rgba(0,0,0,0.6);border-bottom:1px solid var(--line);padding:6px 28px 22px}
+nav.open .nav-links{display:flex}
+.nav-links a:not(.nav-cta){display:block;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
+.nav-links .nav-cta{margin-top:18px;text-align:center;padding:14px 18px;font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -210,7 +220,7 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <nav>
 <div class="container">
 <div class="brand">Cio<span>.</span></div>
-<div class="nav-links">
+<div class="nav-links" id="navLinks">
 <a href="#services">Services</a>
 <a href="#graphics">Graphics</a>
 <a href="#process">Process</a>
@@ -218,8 +228,9 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <a href="#impact">Impact Report</a>
 <a href="#voices">Voices</a>
 <a href="#faq">FAQ</a>
-<a href="https://calendar.google.com/calendar/u/4/r/week/2026/5/10" target="_blank" rel="noopener" class="nav-cta">Book a call &#x2192;</a>
+<a href="mailto:clientcontact.cio@gmail.com" class="nav-cta">Email me &#x2192;</a>
 </div>
+<button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
 </div>
 </nav>
 <header class="hero">
@@ -229,8 +240,8 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <h1>I run the back-end of your business so you can <em>stay in your zone.</em></h1>
 <p class="lead">Hi I'm Cio. I'm an Executive and Operations Assistant for founders, CEOs, and busy operators. I quietly handle the calendar chaos, the inbox tidal wave, the recruiting pipeline, the customer service queue, and the 47 tabs you wish would just close themselves. All powered by AI tools so things move faster than a normal EA can move.</p>
 <div class="cta-row">
-<a href="https://calendar.google.com/calendar/u/4/r/week/2026/5/10" target="_blank" rel="noopener" class="btn btn-primary">Book a free 15-min call <span class="arrow">&#x2192;</span></a>
-<a href="#services" class="btn btn-ghost">See what I do</a>
+<a href="#services" class="btn btn-primary">See what I do <span class="arrow">&#x2192;</span></a>
+<a href="#impact" class="btn btn-ghost">View my impact report</a>
 </div>
 <div class="proof">
 <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
@@ -402,7 +413,7 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <div class="stats-grid">
 <div class="stat-card reveal"><div class="stat-num"><span data-count="40">0</span>%</div><div class="stat-label">Reduction in scheduling conflicts for a US-based CEO</div></div>
 <div class="stat-card reveal"><div class="stat-num"><span data-count="50">0</span>%</div><div class="stat-label">ROI on monthly recruitment placements</div></div>
-<div class="stat-card reveal"><div class="stat-num"><span data-count="25">0</span>%</div><div class="stat-label">Boost in departmental efficiency via new workflows</div></div>
+<div class="stat-card reveal"><div class="stat-num"><span data-count="40">0</span>%</div><div class="stat-label">Boost in departmental efficiency via new workflows</div></div>
 <div class="stat-card reveal"><div class="stat-num"><span data-count="100">0</span>%</div><div class="stat-label">On-time delivery across multi-stream projects</div></div>
 </div>
 </div>
@@ -434,7 +445,7 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <li>Vetted meeting requests to protect his deep-work time</li>
 <li>Point person when he's out of office</li>
 </ul>
-<p class="impact-result">40% fewer scheduling conflicts and downtime. 25% better team efficiency.</p>
+<p class="impact-result">40% fewer scheduling conflicts and downtime. 40% better team efficiency.</p>
 </div>
 <div class="service reveal">
 <div class="icon">&#x1F465;</div>
@@ -600,15 +611,14 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <div class="reveal">
 <div class="eyebrow">Let's talk</div>
 <h2>Get 15+ hours back this month.</h2>
-<p>Book a free 15-minute discovery call. We'll talk about what's eating your week and whether I'm the right person to fix it. No pitch, no pressure.</p>
+<p>Email me and tell me what's eating your week. I reply within 24 hours on weekdays, and I'll tell you straight whether I'm the right person to fix it. No pitch, no pressure.</p>
 <div class="cta-row">
-<a href="https://calendar.google.com/calendar/u/4/r/week/2026/5/10" target="_blank" rel="noopener" class="btn btn-primary">Book a discovery call <span class="arrow">&#x2192;</span></a>
+<a href="mailto:clientcontact.cio@gmail.com" class="btn btn-primary">Email me <span class="arrow">&#x2192;</span></a>
 <a href="#services" class="btn btn-ghost" style="border-color:var(--ink);color:var(--ink)">See what I do</a>
 </div>
 </div>
 </div>
 </section>
-<a href="https://calendar.google.com/calendar/u/4/r/week/2026/5/10" target="_blank" rel="noopener" class="float-cta" id="floatCta">&#x2728; Book a call</a>
 <footer>
 <div class="container">
 <div class="brand">Cio<span>.</span></div>
@@ -630,7 +640,7 @@ const counterIO=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.is
 document.querySelectorAll('[data-count]').forEach(el=>counterIO.observe(el));
 document.querySelectorAll('.faq-item').forEach(item=>{item.addEventListener('click',()=>item.classList.toggle('open'));});
 const fc=document.getElementById('floatCta');
-window.addEventListener('scroll',()=>{if(window.scrollY>600&&window.scrollY<document.body.scrollHeight-1200)fc.classList.add('show');else fc.classList.remove('show');});
+if(fc)window.addEventListener('scroll',()=>{if(window.scrollY>600&&window.scrollY<document.body.scrollHeight-1200)fc.classList.add('show');else fc.classList.remove('show');});
 document.querySelectorAll('.btn-primary,.nav-cta').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();const x=e.clientX-r.left-r.width/2;const y=e.clientY-r.top-r.height/2;btn.style.transform=`translate(${x*0.15}px,${y*0.25}px)`;});btn.addEventListener('mouseleave',()=>{btn.style.transform=''});});
 document.querySelectorAll('.service,.tcard').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5;const y=(e.clientY-r.top)/r.height-0.5;card.style.transform=`translateY(-6px) rotateX(${-y*4}deg) rotateY(${x*4}deg)`;});card.addEventListener('mouseleave',()=>{card.style.transform=''});});
 </script>
@@ -715,6 +725,11 @@ window.addEventListener("mouseup",function(){isDown=false;track.style.cursor="";
 track.addEventListener("mouseleave",function(){isDown=false;track.style.cursor="";});
 track.addEventListener("mousemove",function(e){if(!isDown)return;e.preventDefault();track.scrollLeft=startLeft-(e.pageX-startX);});
 })();
+</script>
+<script>
+(function(){var nav=document.querySelector('nav');var btn=nav&&nav.querySelector('.nav-toggle');if(!btn)return;
+btn.addEventListener('click',function(){var open=nav.classList.toggle('open');btn.setAttribute('aria-expanded',open);btn.setAttribute('aria-label',open?'Close menu':'Open menu');});
+nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');});});})();
 </script>
 </body>
 </html>
