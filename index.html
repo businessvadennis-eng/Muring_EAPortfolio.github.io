@@ -326,6 +326,43 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 @media(max-width:1100px){.testimonials{grid-template-columns:repeat(2,1fr)}.tcard.t-wide{grid-column:auto}}
 @media(max-width:640px){.testimonials{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.t-ov{transition:none}}
+/* ===== Booking widget ===== */
+.book-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;text-align:left}
+.book-grid h2,.book-grid p{margin-left:0;margin-right:0}
+.book-grid .cta-row{justify-content:flex-start}
+.bk{--acc:#059669;--acc-2:#10B981;background:#fff;color:#0F172A;border-radius:22px;padding:22px;box-shadow:0 30px 60px -24px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);max-width:420px;width:100%;justify-self:end}
+.bk-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.bk-head b{font-family:'Fraunces',serif;font-size:19px;font-weight:700}
+.bk-nav{display:flex;gap:6px}
+.bk-nav button,.bk-day,.bk-slot,.bk-go{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bk-nav button{width:32px;height:32px;border-radius:50%;border:1px solid #E2E8F0;background:#fff;color:#334155;display:grid;place-items:center;transition:transform 90ms ease}
+.bk-nav button:disabled{opacity:.35;cursor:default}
+.bk-dow,.bk-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.bk-dow span{font-size:11px;font-weight:700;color:#94A3B8;letter-spacing:.06em;padding:4px 0}
+.bk-day{aspect-ratio:1;border:0;border-radius:10px;background:transparent;color:#0F172A;font-size:14px;font-weight:600;transition:transform 600ms cubic-bezier(.34,1.56,.64,1)}
+.bk-day:hover:not(:disabled){background:#F1F5F9}
+.bk-day:disabled{color:#CBD5E1;cursor:default}
+.bk-day.today{box-shadow:inset 0 0 0 1px #CBD5E1}
+.bk-day[aria-pressed="true"]{background:var(--acc);color:#fff;transform:scale(1.1);box-shadow:0 6px 14px -6px rgba(5,150,105,.7)}
+.bk-label{font-size:12px;font-weight:700;color:#64748B;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 10px}
+.bk-area{position:relative;min-height:84px}
+.bk .bk-hint{position:absolute;top:0;left:0;font-size:13px;color:#94A3B8;margin:0;max-width:none}
+.bk-slots{display:flex;flex-wrap:wrap;gap:8px}
+.bk-slot{border:1px solid #E2E8F0;background:#fff;color:#0F172A;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;opacity:0;transform:translateY(6px);transition:opacity 400ms ease,transform 600ms cubic-bezier(.34,1.56,.64,1)}
+.bk-slots.show .bk-slot{opacity:1;transform:none;transition-delay:calc(var(--i,0) * 80ms)}
+.bk-slot[aria-pressed="true"]{border-color:var(--acc);background:#ECFDF5;color:#065F46;box-shadow:inset 0 0 0 1px var(--acc)}
+.bk-go{margin-top:18px;width:100%;border:0;border-radius:14px;padding:14px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;background:#E2E8F0;color:#94A3B8;cursor:not-allowed;transition:transform 600ms cubic-bezier(.34,1.56,.64,1)}
+.bk-go.ready{background:linear-gradient(135deg,var(--acc-2),var(--acc));color:#fff;cursor:pointer;box-shadow:0 12px 26px -10px rgba(5,150,105,.75)}
+.bk-go svg{width:18px;height:18px}
+.bk-go.done{background:linear-gradient(135deg,var(--acc-2),var(--acc));color:#fff;cursor:default}
+.bk .bk-note{font-size:12.5px;color:#64748B;margin:12px 0 0;line-height:1.5;max-width:none}
+.bk-nav button:active:not(:disabled),.bk-day:active:not(:disabled),.bk-slot:active,.bk-go.ready:active{transform:scale(.94);transition-duration:90ms}
+.bk-day[aria-pressed="true"]:active{transform:scale(1.02)}
+.bk button:focus{outline:none}
+.bk button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(max-width:900px){.book-grid{grid-template-columns:1fr;gap:36px}.bk{justify-self:start}}
+@media(max-width:560px){.cta-block{padding:48px 20px}.bk{padding:18px}}
+@media(prefers-reduced-motion:reduce){.bk-slots.show .bk-slot{transition-delay:0s}.bk-day,.bk-slot,.bk-go{transition:none}}
 </style>
 </head>
 <body>
@@ -735,13 +772,25 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 </section>
 <section id="book">
 <div class="cta-block">
+<div class="book-grid">
 <div class="reveal">
 <div class="eyebrow">Let's talk</div>
 <h2>Get 20 hours back every week.</h2>
-<p>Email me and tell me what's eating your week. I reply within 24 hours on weekdays, and I'll tell you straight whether I'm the right person to fix it. No pitch, no pressure.</p>
+<p>Pick a time for a 30-minute call, or email me and tell me what's eating your week. I reply within 24 hours on weekdays, and I'll tell you straight whether I'm the right person to fix it. No pitch, no pressure.</p>
 <div class="cta-row">
 <a href="mailto:clientcontact.cio@gmail.com" class="btn btn-primary">Email me <span class="arrow">&#x2192;</span></a>
 <a href="#services" class="btn btn-ghost" style="border-color:var(--ink);color:var(--ink)">See what I do</a>
+</div>
+</div>
+<div class="bk reveal" id="bk" aria-label="Pick a time for a discovery call">
+<div class="bk-head"><b>Month</b><div class="bk-nav"><button type="button" data-nav="-1" aria-label="Previous month"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" data-nav="1" aria-label="Next month"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+<div class="bk-dow" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+<div class="bk-days" role="group" aria-label="Days"></div>
+<div class="bk-label">Available times (your time zone)</div>
+<div class="bk-area"><p class="bk-hint">Pick a weekday to see times.</p>
+<div class="bk-slots" role="group" aria-label="Times"></div></div>
+<button type="button" class="bk-go" aria-disabled="true">Confirm</button>
+<p class="bk-note" aria-live="polite">30-minute discovery call. No pitch, no pressure.</p>
 </div>
 </div>
 </div>
@@ -908,5 +957,68 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
 })();
 </script>
 
+<script>
+(function(){
+  var root=document.getElementById('bk');if(!root)return;
+  var EMAIL='clientcontact.cio@gmail.com';
+  var TIMES=['9:00 AM','10:30 AM','1:00 PM','3:00 PM','4:30 PM'];
+  var title=root.querySelector('.bk-head b'),days=root.querySelector('.bk-days'),slots=root.querySelector('.bk-slots'),
+      hint=root.querySelector('.bk-hint'),go=root.querySelector('.bk-go'),note=root.querySelector('.bk-note'),
+      prev=root.querySelector('[data-nav="-1"]'),next=root.querySelector('[data-nav="1"]');
+  var today=new Date();today.setHours(0,0,0,0);
+  var view=new Date(today.getFullYear(),today.getMonth(),1),picked=null,slot=null,booked=false;
+  var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+  function fmt(d,o){return d.toLocaleDateString('en-US',o);}
+  function renderDays(){
+    title.textContent=fmt(view,{month:'long',year:'numeric'});
+    prev.disabled=view.getFullYear()===today.getFullYear()&&view.getMonth()===today.getMonth();
+    var max=new Date(today.getFullYear(),today.getMonth()+2,1);next.disabled=view>=max;
+    days.innerHTML='';
+    var lead=view.getDay(),n=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+    for(var i=0;i<lead;i++){days.appendChild(document.createElement('span'));}
+    for(var d=1;d<=n;d++){
+      var dt=new Date(view.getFullYear(),view.getMonth(),d),b=document.createElement('button');
+      b.type='button';b.className='bk-day';b.textContent=d;
+      var wk=dt.getDay()===0||dt.getDay()===6;
+      b.disabled=dt<today||wk;
+      if(+dt===+today)b.classList.add('today');
+      b.setAttribute('aria-label',fmt(dt,{weekday:'long',month:'long',day:'numeric'})+(wk?', unavailable':''));
+      b.setAttribute('aria-pressed',picked&&+picked===+dt?'true':'false');
+      b.dataset.t=+dt;days.appendChild(b);
+    }
+  }
+  function renderSlots(){
+    slots.innerHTML='';slots.classList.remove('show');
+    TIMES.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='bk-slot';b.textContent=t;
+      b.style.setProperty('--i',i);b.setAttribute('aria-pressed','false');b.disabled=!picked;slots.appendChild(b);});
+    hint.hidden=!!picked;
+    if(picked){void slots.offsetWidth;requestAnimationFrame(function(){slots.classList.add('show');});}
+  }
+  function updateGo(){
+    if(booked)return;
+    var ok=!!(picked&&slot);go.classList.toggle('ready',ok);go.setAttribute('aria-disabled',ok?'false':'true');
+    go.innerHTML=ok?'Confirm '+fmt(picked,{month:'short',day:'numeric'})+', '+slot:'Confirm';
+  }
+  days.addEventListener('click',function(e){var b=e.target.closest('.bk-day');if(!b||b.disabled||booked)return;
+    picked=new Date(+b.dataset.t);slot=null;
+    days.querySelectorAll('.bk-day').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    renderSlots();updateGo();});
+  slots.addEventListener('click',function(e){var b=e.target.closest('.bk-slot');if(!b||booked)return;slot=b.textContent;
+    slots.querySelectorAll('.bk-slot').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});updateGo();});
+  prev.addEventListener('click',function(){view=new Date(view.getFullYear(),view.getMonth()-1,1);renderDays();});
+  next.addEventListener('click',function(){view=new Date(view.getFullYear(),view.getMonth()+1,1);renderDays();});
+  go.addEventListener('click',function(){
+    if(booked||!(picked&&slot))return;
+    var when=fmt(picked,{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' at '+slot+(tz?' ('+tz+')':'');
+    var subj='Discovery call request: '+fmt(picked,{month:'short',day:'numeric'})+', '+slot;
+    var body='Hi Cio,\n\nI\'d like to book a discovery call on '+when+'.\n\nA bit about what I need help with:\n\n';
+    window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+    booked=true;go.classList.remove('ready');go.classList.add('done');go.setAttribute('aria-disabled','true');
+    go.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Booked';
+    note.textContent='Your email app opened with '+when+' filled in. Hit send and I\'ll confirm within 24 hours on weekdays.';
+  });
+  renderDays();renderSlots();updateGo();
+})();
+</script>
 </body>
 </html>
