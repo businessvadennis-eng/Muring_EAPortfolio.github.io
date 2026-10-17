@@ -297,6 +297,20 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 @media(max-width:880px){.rows{grid-template-columns:1fr;gap:10px}.rows .row{flex-direction:row;align-items:center;min-height:0;padding:14px}.rows .row .tag{position:static}.rows .row .dotc{margin-top:0}.rows .row .t{font-size:14px}}
 @media(max-width:480px){.shot-live{display:none}}
 @media(prefers-reduced-motion:reduce){.shot-live .dotc{animation:none}.seg-ind,.stack>*,.seg button{transition:none}}
+/* ===== Rotating headline words ===== */
+.rot{display:inline-grid;perspective:520px;vertical-align:bottom}
+.rot-w{grid-area:1/1;justify-self:start;white-space:nowrap;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform-origin:50% 60%;animation:rot-word 6s cubic-bezier(.32,.72,0,1) infinite both}
+.rot-w:nth-child(2){animation-delay:2s}
+.rot-w:nth-child(3){animation-delay:4s}
+@keyframes rot-word{
+  0%{opacity:0;transform:rotateX(-90deg) translateY(.2em)}
+  9%{opacity:1;transform:none}
+  33%{opacity:1;transform:none}
+  42%{opacity:0;transform:rotateX(90deg) translateY(-.2em)}
+  100%{opacity:0;transform:rotateX(90deg) translateY(-.2em)}
+}
+@media(max-width:420px){.rot-w{white-space:normal}}
+@media(prefers-reduced-motion:reduce){.rot-w{animation:none}.rot-w+.rot-w{display:none}}
 </style>
 </head>
 <body>
@@ -322,7 +336,7 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 <div class="container hero-grid">
 <div class="hero-copy reveal">
 <div class="badge"><span class="dot"></span> Accepting 2 new clients this quarter</div>
-<h1>I run the back-end of your business so you can <em>stay in your zone.</em></h1>
+<h1>I run the back-end of your business so you can <span class="rot"><em class="rot-w">stay in your zone.</em><em class="rot-w" aria-hidden="true">focus on growth.</em><em class="rot-w" aria-hidden="true">think bigger.</em></span></h1>
 <p class="lead">I'm Cio, an executive and operations assistant for founders and CEOs. I manage your calendar, inbox, hiring and customer support, so your week goes to the decisions only you can make.</p>
 <div class="cta-row">
 <a href="#services" class="btn btn-primary">See what I do <span class="arrow">&#x2192;</span></a>
