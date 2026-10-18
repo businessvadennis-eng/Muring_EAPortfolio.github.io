@@ -312,6 +312,35 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 .bk-embed iframe{display:block;width:100%;height:760px;border:0}
 @media(max-width:760px){.bk-embed iframe{height:900px}.bk-embed{border-radius:16px}}
 @media(max-width:560px){.cta-block{padding:48px 14px;margin:0 14px;border-radius:24px}.book-grid{gap:28px}}
+/* ===== Hero: camera-on-a-rail scroll scene (Three.js) ===== */
+.rail{position:relative;height:520vh;padding:0}
+.rail-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.rail-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.rail-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(var(--bg-rgb),.92) 0%,rgba(var(--bg-rgb),.55) 38%,rgba(var(--bg-rgb),0) 62%)}
+.rail-caps{position:absolute;inset:0;z-index:2;pointer-events:none}
+.rail-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-50% + 14px));opacity:0;transition:opacity .6s cubic-bezier(.32,.72,0,1),transform .6s cubic-bezier(.32,.72,0,1)}
+.rail-cap.on{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.rail-cap .container{max-width:var(--max)}
+.rail-cap-in{max-width:560px}
+.rail-cap .eyebrow{margin-bottom:12px}
+.rail-cap h2{font-size:clamp(30px,3.6vw,46px);margin-bottom:14px}
+.rail-cap p{color:var(--muted);font-size:18px;line-height:1.6;margin:0 0 24px;max-width:480px}
+.rail-cap .hero-h1{margin-bottom:20px}
+.rail-cap .lead{margin-bottom:28px}
+.rail-prog{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:3;display:flex;gap:8px;align-items:center}
+.rail-prog i{width:22px;height:3px;border-radius:3px;background:rgba(var(--muted-rgb),.3);transition:background .4s,width .4s}
+.rail-prog i.on{background:var(--accent);width:38px}
+.rail-hint{position:absolute;right:28px;bottom:24px;z-index:3;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:opacity .4s}
+.rail.past-start .rail-hint{opacity:0}
+@media(max-width:880px){
+  .rail-stage::after{background:linear-gradient(0deg,rgba(var(--bg-rgb),.95) 0%,rgba(var(--bg-rgb),.75) 42%,rgba(var(--bg-rgb),0) 70%)}
+  .rail-cap{top:auto;bottom:64px;transform:translateY(14px)}
+  .rail-cap.on{transform:none}
+  .rail-cap p{font-size:16px}
+  .rail-cap .lead{font-size:16px}
+  .rail-hint{display:none}
+}
+@media(max-width:560px){.rail-cap .cta-row .btn{padding:13px 20px}.rail-cap .proof{display:none}}
 </style>
 </head>
 <body>
@@ -333,26 +362,40 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
 </div>
 </nav>
-<header class="hero" id="hero">
-<div class="container hero-grid">
-<div class="hero-copy reveal">
+<header class="hero rail" id="hero">
+<div class="rail-stage">
+<canvas class="rail-canvas" aria-hidden="true"></canvas>
+<div class="rail-caps">
+<div class="rail-cap on" data-s="0"><div class="container"><div class="rail-cap-in">
 <div class="badge"><span class="dot"></span> Accepting 2 new clients this quarter</div>
 <h1 class="hero-h1">You hired yourself to lead. Not to answer emails. <span class="tw-line"><span class="tw-type" aria-live="off">Get back to building.</span><span class="tw-bar" aria-hidden="true"></span></span></h1>
 <p class="lead">I&#x2019;m Cio, an executive assistant for founders, CEOs and busy consultants. I take your calendar, inbox, hiring, client logistics and even your personal errands off your plate, so your week goes to the work only you can do.</p>
 <div class="cta-row">
-<a href="#services" class="btn btn-primary">See what I do <span class="arrow">&#x2192;</span></a>
-<a href="#impact" class="btn btn-ghost">View my impact report</a>
+<a href="#book" class="btn btn-primary">Book a 15-min call <span class="arrow">&#x2192;</span></a>
+<a href="#services" class="btn btn-ghost">See what I do</a>
 </div>
-<div class="proof">
-<div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
-<span>Trusted by founders across the US, AU and PH</span>
+<div class="proof"><div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><span>Trusted by founders across the US, AU and PH</span></div>
+</div></div></div>
+<div class="rail-cap" data-s="1"><div class="container"><div class="rail-cap-in">
+<div class="eyebrow">Calendar</div><h2>Your calendar, under control.</h2>
+<p>Meetings booked across time zones, conflicts cleared before you see them, and focus time protected.</p>
+</div></div></div>
+<div class="rail-cap" data-s="2"><div class="container"><div class="rail-cap-in">
+<div class="eyebrow">Inbox and clients</div><h2>Every reply handled. Nothing slips.</h2>
+<p>Urgent mail flagged, replies drafted for your yes, and client follow-ups sent on time.</p>
+</div></div></div>
+<div class="rail-cap" data-s="3"><div class="container"><div class="rail-cap-in">
+<div class="eyebrow">Hiring and operations</div><h2>The back office, running quietly.</h2>
+<p>Interviews scheduled, vendors chased, invoices approved and reports ready before you ask.</p>
+</div></div></div>
+<div class="rail-cap" data-s="4"><div class="container"><div class="rail-cap-in">
+<div class="eyebrow">Personal errands</div><h2>Even life outside work.</h2>
+<p>Travel, gifts and family logistics handled, so your week goes to the work only you can do.</p>
+<div class="cta-row"><a href="#book" class="btn btn-primary">Book a 15-min call <span class="arrow">&#x2192;</span></a></div>
+</div></div></div>
 </div>
-</div>
-<div class="orbit reveal" role="group" aria-label="What I handle for you">
-<div class="orbit-ring"><div class="orbit-slot" style="--a:0deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:0deg" href="#services" aria-label="Calendar management" title="Calendar management"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 10h18M8 14h3"/></svg></a></div></div><div class="orbit-slot" style="--a:72deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:72deg" href="#services" aria-label="Inbox management" title="Inbox management"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></a></div></div><div class="orbit-slot" style="--a:144deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:144deg" href="#services" aria-label="Recruiting and hiring" title="Recruiting and hiring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><path d="M16 5.5a3 3 0 0 1 0 5.6M18 14.4c1.6.7 2.7 2.3 3 4.6"/></svg></a></div></div><div class="orbit-slot" style="--a:216deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:216deg" href="#services" aria-label="Customer support" title="Customer support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l.9-4.1A8 8 0 1 1 20 12z"/><path d="M8.5 11h7M8.5 14h4.5"/></svg></a></div></div><div class="orbit-slot" style="--a:288deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:288deg" href="#impact" aria-label="Travel planning" title="Travel planning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 13.5 3 11l1.5-1.5 8 .5 4.5-4.5a2 2 0 0 1 3 3L15.5 13l.5 8L14.5 22.5 12 15"/></svg></a></div></div></div>
-<div class="orbit-ring inner"><div class="orbit-slot" style="--a:30deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:30deg" href="#process" aria-label="SOPs and documentation" title="SOPs and documentation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></a></div></div><div class="orbit-slot" style="--a:150deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:150deg" href="#results" aria-label="Reports and results" title="Reports and results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></a></div></div><div class="orbit-slot" style="--a:270deg"><div class="orbit-pos"><a class="orbit-ico" style="--a:270deg" href="#graphics" aria-label="Graphics and content" title="Graphics and content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg></a></div></div></div>
-<div class="orbit-core"><b>Cio<span>.</span></b></div>
-</div>
+<div class="rail-prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+<div class="rail-hint" aria-hidden="true">Scroll &#x2193;</div>
 </div>
 </header>
 <div class="logos">
@@ -872,6 +915,89 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
       .to(span,{text:{value:next},duration:next.length*0.08,ease:'none'});
   }
   cycle();
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var rail=document.getElementById('hero'),canvas=rail&&rail.querySelector('.rail-canvas');
+  if(!rail||!canvas)return;
+  var caps=rail.querySelectorAll('.rail-cap'),bars=rail.querySelectorAll('.rail-prog i'),STOPS=caps.length;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function rawProgress(){var r=rail.getBoundingClientRect(),span=r.height-window.innerHeight;return span>0?Math.min(1,Math.max(0,-r.top/span)):0;}
+  var curSec=-1;
+  function setSection(s){if(s===curSec)return;curSec=s;caps.forEach(function(c,k){c.classList.toggle('on',k===s);c.setAttribute('aria-hidden',k===s?'false':'true');});
+    bars.forEach(function(b,k){b.classList.toggle('on',k===s);});}
+  function secFor(p){return Math.min(STOPS-1,Math.floor(p*STOPS));}
+  setSection(0);
+  if(!window.THREE){window.addEventListener('scroll',function(){setSection(secFor(rawProgress()));rail.classList.toggle('past-start',rawProgress()>.02);},{passive:true});return;}
+  var renderer;try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,powerPreference:'low-power'});}catch(e){window.addEventListener('scroll',function(){setSection(secFor(rawProgress()));},{passive:true});return;}
+  var css=getComputedStyle(document.documentElement);
+  function col(v,f){var c=(css.getPropertyValue(v)||'').trim();return c||f;}
+  var BG=col('--bg','#0F1424'),ACC=col('--accent','#E8B96A'),TXT='#0F1424',PAPER=col('--text','#F5F3EE'),MUT='#6B7088';
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setClearColor(BG,1);
+  var scene=new THREE.Scene();scene.fog=new THREE.Fog(BG,3.5,15);
+  var camera=new THREE.PerspectiveCamera(55,1,0.1,80);
+  var curve=new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1.2,.3,-4),new THREE.Vector3(-.8,.6,-8),new THREE.Vector3(-1.6,.2,-12),new THREE.Vector3(.4,-.2,-16),
+    new THREE.Vector3(1.8,.3,-20),new THREE.Vector3(.6,.7,-24),new THREE.Vector3(-1.2,.3,-28),new THREE.Vector3(-.4,-.1,-32),new THREE.Vector3(.8,.2,-36)],false,'centripetal');
+  var disposables=[];
+  // route dots
+  var pts=curve.getSpacedPoints(180).map(function(p){return new THREE.Vector3(p.x,p.y-.45,p.z);});
+  var rg=new THREE.BufferGeometry().setFromPoints(pts),rm=new THREE.PointsMaterial({color:ACC,size:.05,transparent:true,opacity:.85});
+  scene.add(new THREE.Points(rg,rm));disposables.push(rg,rm);
+  // card textures
+  function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+  function base(c,title){c.clearRect(0,0,512,320);rr(c,6,6,500,308,34);c.fillStyle=PAPER;c.fill();c.fillStyle=MUT;c.font='600 18px Manrope, system-ui, sans-serif';c.fillText(title.toUpperCase(),36,52);}
+  function t(c,s,x,y,f,color){c.font=f;c.fillStyle=color||TXT;c.fillText(s,x,y);}
+  function pill(c,s,x,y,bg,fg){c.font='700 17px Manrope, system-ui, sans-serif';var w=c.measureText(s).width+28;rr(c,x,y,w,34,17);c.fillStyle=bg;c.fill();c.fillStyle=fg;c.fillText(s,x+14,y+23);return w;}
+  var draw=[
+    function(c){base(c,'Payment notice');t(c,'$2,480.00',36,138,'700 54px Fraunces, Georgia, serif');t(c,'Vendor invoice approved',36,180,'500 22px Manrope, system-ui, sans-serif',MUT);pill(c,'Paid',36,222,ACC,TXT);t(c,'Due Fri',380,246,'600 18px Manrope, system-ui, sans-serif',MUT);},
+    function(c){base(c,'Thursday');var ev=[['9:00','Board prep',ACC],['11:30','Client call','#C9CEDD'],['2:00','Focus time','#E7E2D6']];ev.forEach(function(e,k){var y=78+k*72;t(c,e[0],36,y+38,'600 18px Manrope, system-ui, sans-serif',MUT);rr(c,112,y+8,360,50,14);c.fillStyle=e[2];c.fill();t(c,e[1],132,y+40,'700 20px Manrope, system-ui, sans-serif');});},
+    function(c){base(c,'Client chat');rr(c,36,76,330,62,22);c.fillStyle='#E4E1D8';c.fill();t(c,'Can we move to 3pm?',58,115,'500 21px Manrope, system-ui, sans-serif');rr(c,150,156,326,62,22);c.fillStyle=ACC;c.fill();t(c,'Done. Invite updated.',172,195,'600 21px Manrope, system-ui, sans-serif');t(c,'Read 10:42',372,258,'500 16px Manrope, system-ui, sans-serif',MUT);},
+    function(c){base(c,'Hours back / week');var h=[60,90,80,130,150,190];h.forEach(function(v,k){rr(c,40+k*60,280-v,38,v,8);c.fillStyle=k===5?ACC:'#D9D5CB';c.fill();});t(c,'20',400,150,'700 64px Fraunces, Georgia, serif');t(c,'hrs',410,182,'600 18px Manrope, system-ui, sans-serif',MUT);},
+    function(c){base(c,'Inbox rules');[['Flag urgent mail',1],['Draft replies',1],['Weekend pings',0]].forEach(function(r,k){var y=96+k*66;t(c,r[0],36,y+22,'600 22px Manrope, system-ui, sans-serif');rr(c,390,y-4,76,38,19);c.fillStyle=r[1]?ACC:'#D4D0C6';c.fill();c.beginPath();c.arc(r[1]?447:409,y+15,14,0,7);c.fillStyle='#fff';c.fill();});},
+    function(c){base(c,'Your assistant');c.beginPath();c.arc(92,150,52,0,7);c.fillStyle=TXT;c.fill();t(c,'Cio',66,166,'700 40px Fraunces, Georgia, serif',PAPER);t(c,'Cio',170,140,'700 34px Fraunces, Georgia, serif');t(c,'Executive Assistant',170,176,'500 20px Manrope, system-ui, sans-serif',MUT);pill(c,'Available',170,214,'#E7E2D6',TXT);},
+    function(c){base(c,'Today');[['Confirm vendor quotes',1],['Send interview invites',1],['Book flights',1],['Weekly report',0]].forEach(function(r,k){var y=84+k*54;rr(c,36,y,30,30,8);if(r[1]){c.fillStyle=ACC;c.fill();c.strokeStyle=TXT;c.lineWidth=3;c.beginPath();c.moveTo(43,y+16);c.lineTo(49,y+22);c.lineTo(60,y+9);c.stroke();}else{c.strokeStyle='#B9B5AB';c.lineWidth=2;c.stroke();}t(c,r[0],84,y+23,'600 20px Manrope, system-ui, sans-serif',r[1]?MUT:TXT);});},
+    function(c){c.clearRect(0,0,512,320);c.save();rr(c,6,6,500,308,34);c.clip();var g=c.createLinearGradient(0,0,0,320);g.addColorStop(0,'#F4C98A');g.addColorStop(.55,'#E89B7A');g.addColorStop(1,'#3B4A7A');c.fillStyle=g;c.fillRect(0,0,512,320);
+      c.beginPath();c.arc(330,150,46,0,7);c.fillStyle='#FFE7B8';c.fill();c.fillStyle='#2A3460';c.beginPath();c.moveTo(0,250);c.lineTo(120,170);c.lineTo(220,240);c.lineTo(320,190);c.lineTo(512,260);c.lineTo(512,320);c.lineTo(0,320);c.fill();
+      c.fillStyle='rgba(15,20,36,.55)';c.fillRect(0,262,512,58);t(c,'Hawaii trip · booked',30,300,'700 22px Manrope, system-ui, sans-serif','#F5F3EE');c.restore();}
+  ];
+  // shadow texture
+  var sc=document.createElement('canvas');sc.width=sc.height=256;var sx=sc.getContext('2d'),sg=sx.createRadialGradient(128,128,10,128,128,128);
+  sg.addColorStop(0,'rgba(0,0,0,.55)');sg.addColorStop(1,'rgba(0,0,0,0)');sx.fillStyle=sg;sx.fillRect(0,0,256,256);
+  var shadowTex=new THREE.CanvasTexture(sc),shadowMat=new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false,fog:true});
+  var cardGeo=new THREE.PlaneGeometry(1.6,1),shadowGeo=new THREE.PlaneGeometry(2.3,1.7);disposables.push(shadowTex,shadowMat,cardGeo,shadowGeo);
+  var up=new THREE.Vector3(0,1,0),cards=[];
+  draw.forEach(function(fn,i){
+    var cv=document.createElement('canvas');cv.width=512;cv.height=320;fn(cv.getContext('2d'));
+    var tex=new THREE.CanvasTexture(cv);tex.anisotropy=4;var mat=new THREE.MeshBasicMaterial({map:tex,transparent:true});disposables.push(tex,mat);
+    var g=new THREE.Group(),card=new THREE.Mesh(cardGeo,mat),sh=new THREE.Mesh(shadowGeo,shadowMat);sh.position.set(.06,-.08,-.06);g.add(sh);g.add(card);
+    var u=.1+i*.1,p=curve.getPointAt(u),tan=curve.getTangentAt(u),side=new THREE.Vector3().crossVectors(tan,up).normalize().multiplyScalar(1.35*(i%2?1:-1));
+    g.position.copy(p).add(side);g.position.y+=.15;
+    var back=curve.getPointAt(Math.max(0,u-.08));back.y+=.25;g.lookAt(back);
+    scene.add(g);cards.push({g:g,u:u,y:g.position.y,s:1,i:i,tex:tex});
+  });
+  // redraw when web fonts arrive so card text uses the site fonts
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){cards.forEach(function(c){var cv=c.tex.image;draw[c.i](cv.getContext('2d'));c.tex.needsUpdate=true;});});
+  function resize(){var w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<h?72:55;camera.updateProjectionMatrix();}
+  var ro=new ResizeObserver(resize);ro.observe(canvas);resize();
+  var smooth=rawProgress(),visible=true,raf=0,t0=performance.now();
+  var look=new THREE.Vector3();
+  function place(p,time){var ct=.02+p*.84,pos=curve.getPointAt(ct);camera.position.set(pos.x,pos.y+.25,pos.z);
+    look.copy(curve.getPointAt(Math.min(1,ct+.05)));look.y+=.12;camera.lookAt(look);
+    var target=ct+.06,best=null,bd=9;cards.forEach(function(c){var d=Math.abs(c.u-target);if(d<bd){bd=d;best=c;}});
+    cards.forEach(function(c){var goal=c===best?1.2:1;c.s+=(goal-c.s)*(reduce?1:.08);c.g.scale.setScalar(c.s);c.g.position.y=c.y+(reduce?0:Math.sin(time*1.3+c.i*1.7)*.05);});
+    setSection(secFor(p));rail.classList.toggle('past-start',p>.02);renderer.render(scene,camera);}
+  if(reduce){ // jump between stops, no smoothing or bobbing
+    var render=function(){var s=secFor(rawProgress());place(s/(STOPS-1)*.999,0);};
+    window.addEventListener('scroll',render,{passive:true});ro.disconnect();ro=new ResizeObserver(function(){resize();render();});ro.observe(canvas);render();
+  }else{
+    var loop=function(now){raf=requestAnimationFrame(loop);smooth+=(rawProgress()-smooth)*.08;place(smooth,(now-t0)/1000);};
+    new IntersectionObserver(function(e){visible=e[0].isIntersecting;if(visible&&!raf)raf=requestAnimationFrame(loop);else if(!visible&&raf){cancelAnimationFrame(raf);raf=0;}}).observe(rail);
+    raf=requestAnimationFrame(loop);
+  }
+  window.addEventListener('pagehide',function(e){if(e.persisted)return;cancelAnimationFrame(raf);ro.disconnect();disposables.forEach(function(d){d.dispose();});renderer.dispose();});
 })();
 </script>
 </body>
