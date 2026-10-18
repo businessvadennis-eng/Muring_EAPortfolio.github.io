@@ -312,6 +312,37 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 .bk-embed iframe{display:block;width:100%;height:760px;border:0}
 @media(max-width:760px){.bk-embed iframe{height:900px}.bk-embed{border-radius:16px}}
 @media(max-width:560px){.cta-block{padding:48px 14px;margin:0 14px;border-radius:24px}.book-grid{gap:28px}}
+/* ===== Services: sliding-doors cards ===== */
+.door-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.door-card{--ease:linear(0, 0.094 5.6%, 0.274 11.1%, 0.455 16.7%, 0.608 22.2%, 0.726 27.8%, 0.812 33.3%, 0.873 38.9%, 0.916 44.4%, 0.944 50%, 0.964 55.6%, 0.976 61.1%, 0.985 66.7%, 0.99 72.2%, 0.994 77.8%, 0.996 83.3%, 0.998 88.9%, 1 100%);position:relative;overflow:hidden;border-radius:20px;min-height:360px;background:var(--surface);border:1px solid var(--line);cursor:pointer;outline:none;isolation:isolate}
+.door-card:focus-visible{box-shadow:0 0 0 3px var(--accent)}
+.dc-detail{padding:28px 26px 26px}
+.dc-detail h3{font-family:'Fraunces',serif;font-size:21px;color:var(--text);margin:0 0 8px;line-height:1.25}
+.dc-detail p{font-size:14.5px;color:var(--muted);margin:0 0 18px;line-height:1.55}
+.dc-detail ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.dc-detail li{position:relative;padding-left:22px;font-size:14px;color:var(--text);line-height:1.45;opacity:0;transform:translateY(7px);transition:opacity 180ms ease,transform 180ms ease;transition-delay:0ms}
+.dc-detail li::before{content:"";position:absolute;left:0;top:.45em;width:10px;height:6px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg)}
+.dc-door{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;z-index:2;transition:transform 820ms var(--ease);transition-delay:160ms}
+.dc-door.l{left:0}.dc-door.r{right:0}
+.dc-door.l::after{content:"";position:absolute;top:0;bottom:0;right:0;width:1px;background:linear-gradient(180deg,transparent,rgba(var(--accent-rgb),.7) 30%,rgba(var(--text-rgb),.55) 50%,rgba(var(--accent-rgb),.7) 70%,transparent)}
+.dc-cover{position:absolute;top:0;bottom:0;width:200%;display:flex;flex-direction:column;padding:28px 26px;background:radial-gradient(120% 90% at 85% 0%,rgba(var(--accent-rgb),.22),transparent 55%),linear-gradient(155deg,var(--surface-2) 0%,var(--surface) 60%,var(--bg) 100%)}
+.dc-door.l .dc-cover{left:0}.dc-door.r .dc-cover{left:-100%}
+.dc-k{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--muted)}
+.dc-ic{font-size:34px;margin:auto 0 14px}
+.dc-t{font-family:'Fraunces',serif;font-size:26px;font-weight:700;line-height:1.15;color:var(--text);max-width:85%}
+.dc-hint{margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.dc-hint .h-t{display:none}@media(hover:none){.dc-hint .h-d{display:none}.dc-hint .h-t{display:inline}}
+.dc-logo{position:absolute;top:24px;right:26px;font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--text)}
+.dc-logo i{font-style:normal;color:var(--accent)}
+.door-card:hover .dc-door,.door-card:focus-visible .dc-door,.door-card.is-open .dc-door{transition-delay:0ms}
+.door-card:hover .dc-door.l,.door-card:focus-visible .dc-door.l,.door-card.is-open .dc-door.l{transform:translateX(-100%)}
+.door-card:hover .dc-door.r,.door-card:focus-visible .dc-door.r,.door-card.is-open .dc-door.r{transform:translateX(100%)}
+.door-card:hover li,.door-card:focus-visible li,.door-card.is-open li{opacity:1;transform:none;transition-duration:420ms;transition-delay:calc(340ms + var(--i) * 80ms)}
+@media(hover:none){.door-card:hover .dc-door.l{transform:none}.door-card:hover .dc-door.r{transform:none}.door-card:hover li{opacity:0}.door-card.is-open .dc-door.l{transform:translateX(-100%)}.door-card.is-open .dc-door.r{transform:translateX(100%)}.door-card.is-open li{opacity:1}}
+@media(max-width:1000px){.door-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.door-grid{grid-template-columns:1fr}.door-card{min-height:330px}}
+@media(prefers-reduced-motion:reduce){.dc-door,.dc-detail li{transition:none!important}}
+
 /* ===== Results: impact report download ===== */
 .report-dl{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:22px 26px;border:1px solid var(--line);border-radius:18px;background:rgba(var(--surface-rgb),.6)}
 .report-dl-t b{display:block;color:var(--text);font-size:16px;font-weight:700;margin-bottom:4px}
@@ -458,87 +489,39 @@ nav .container{position:relative}
 <div class="reveal">
 <div class="eyebrow">Services</div>
 <h2>Six ways I make your week lighter.</h2>
-<p class="section-sub">Pick one or stack them. Hover any card to see what's inside. All packages are AI-augmented so the work moves faster and lands cleaner.</p>
+<p class="section-sub">Pick one or stack them. Hover or tap a card to see what's included.</p>
 </div>
-<div class="services-carousel">
-<button class="svc-nav prev" aria-label="Previous services" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-<button class="svc-nav next" aria-label="Next services" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-<div class="services-track" id="servicesTrack">
-<div class="service reveal">
-<div class="icon">&#x2728;</div>
-<h3>Executive Assistant</h3>
-<p>Your calendar, inbox, and life logistics. Handled.</p>
-<ul>
-<li>Calendar and travel orchestration</li>
-<li>Inbox triage and priority filters</li>
-<li>Meeting prep, agendas, and minutes</li>
-<li>Personal and VIP relationship support</li>
-<li>AI-assisted briefs and recaps via Claude.ai</li>
-</ul>
-</div>
-<div class="service reveal">
-<div class="icon">&#x2699;&#xfe0f;</div>
-<h3>Operations Assistant</h3>
-<p>Build the systems your business needed yesterday.</p>
-<ul>
-<li>SOPs, workflows, and automation</li>
-<li>Project management end to end</li>
-<li>CRM and database hygiene</li>
-<li>Reporting dashboards and KPIs</li>
-<li>AI-drafted documentation and process maps</li>
-</ul>
-</div>
-<div class="service reveal">
-<div class="icon">&#x1F3AF;</div>
-<h3>Recruiting and Talent Ops</h3>
-<p>Healthcare staffing, both medical and non-medical. Fill the seats. Onboard like a pro.</p>
-<ul>
-<li>Full-cycle recruitment for medical and non-medical roles</li>
-<li>Bullhorn, Stafferlink, ATS, and VMS management</li>
-<li>Sourcing campaigns and candidate outreach</li>
-<li>Onboarding, credentialing, and compliance</li>
-<li>Viktor.ai automated sourcing and screening</li>
-</ul>
-</div>
-<div class="service reveal">
-<div class="icon">&#x1F4DE;</div>
-<h3>Customer Service and Inbound Sales</h3>
-<p>For online retail and service businesses. Every ticket answered. Every cart saved.</p>
-<ul>
-<li>Multi-channel support across email, chat, and DMs</li>
-<li>Order management, refunds, and returns</li>
-<li>Inbound sales calls and warm lead conversion</li>
-<li>Genesys, Amazon Connect, OpenPhone, Zendesk</li>
-<li>AI-assisted reply drafts and escalation tagging</li>
-</ul>
-</div>
-<div class="service reveal">
-<div class="icon">&#x1F4F1;</div>
-<h3>Social Media Management</h3>
-<p>Show up daily without you ever opening the app.</p>
-<ul>
-<li>Content calendar, captions, and hashtag strategy</li>
-<li>Reels and short-form editing in CapCut and Canva</li>
-<li>Scheduling via SocialBee, Meta Business Suite</li>
-<li>Community management and DM triage</li>
-<li>AI-generated assets via Creatify and Claude.ai</li>
-</ul>
-</div>
-<div class="service reveal">
-<div class="icon">&#x1F916;</div>
-<h3>AI-Powered Workflows</h3>
-<p>I'm an EA who works like a small team because I deploy AI on every step.</p>
-<ul>
-<li>Custom GPTs and Claude.ai prompt libraries</li>
-<li>Viktor.ai recruiting automation</li>
-<li>GitHub-hosted SOPs and version control</li>
-<li>Inbox, lead, and reporting automations</li>
-<li>Hand-off ready playbooks for your team</li>
-</ul>
-</div>
-</div>
-<div class="svc-dots" id="svcDots"></div>
-<div class="swipe-hint">Swipe to see more →</div>
+<div class="door-grid">
+<article class="door-card reveal" tabindex="0" aria-label="Executive Assistant: Your calendar, inbox, and life logistics. Handled.">
+<div class="dc-detail"><h3>Executive Assistant</h3><p>Your calendar, inbox, and life logistics. Handled.</p><ul><li style="--i:0">Calendar and travel orchestration</li><li style="--i:1">Inbox triage and priority filters</li><li style="--i:2">Meeting prep, agendas, and minutes</li><li style="--i:3">Personal and VIP relationship support</li><li style="--i:4">AI-assisted briefs and recaps via Claude.ai</li></ul></div>
+<div class="dc-door l" aria-hidden="true"><div class="dc-cover"><span class="dc-k">01</span><span class="dc-ic" aria-hidden="true">&#x2728;</span><span class="dc-t">Executive Assistant</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+<div class="dc-door r" aria-hidden="true"><div class="dc-cover"><span class="dc-k">01</span><span class="dc-ic" aria-hidden="true">&#x2728;</span><span class="dc-t">Executive Assistant</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+</article>
+<article class="door-card reveal" tabindex="0" aria-label="Operations Assistant: Build the systems your business needed yesterday.">
+<div class="dc-detail"><h3>Operations Assistant</h3><p>Build the systems your business needed yesterday.</p><ul><li style="--i:0">SOPs, workflows, and automation</li><li style="--i:1">Project management end to end</li><li style="--i:2">CRM and database hygiene</li><li style="--i:3">Reporting dashboards and KPIs</li><li style="--i:4">AI-drafted documentation and process maps</li></ul></div>
+<div class="dc-door l" aria-hidden="true"><div class="dc-cover"><span class="dc-k">02</span><span class="dc-ic" aria-hidden="true">&#x2699;&#xfe0f;</span><span class="dc-t">Operations Assistant</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+<div class="dc-door r" aria-hidden="true"><div class="dc-cover"><span class="dc-k">02</span><span class="dc-ic" aria-hidden="true">&#x2699;&#xfe0f;</span><span class="dc-t">Operations Assistant</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+</article>
+<article class="door-card reveal" tabindex="0" aria-label="Recruiting and Talent Ops: Healthcare staffing, both medical and non-medical. Fill the seats. Onboard like a pro.">
+<div class="dc-detail"><h3>Recruiting and Talent Ops</h3><p>Healthcare staffing, both medical and non-medical. Fill the seats. Onboard like a pro.</p><ul><li style="--i:0">Full-cycle recruitment for medical and non-medical roles</li><li style="--i:1">Bullhorn, Stafferlink, ATS, and VMS management</li><li style="--i:2">Sourcing campaigns and candidate outreach</li><li style="--i:3">Onboarding, credentialing, and compliance</li><li style="--i:4">Viktor.ai automated sourcing and screening</li></ul></div>
+<div class="dc-door l" aria-hidden="true"><div class="dc-cover"><span class="dc-k">03</span><span class="dc-ic" aria-hidden="true">&#x1F3AF;</span><span class="dc-t">Recruiting and Talent Ops</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+<div class="dc-door r" aria-hidden="true"><div class="dc-cover"><span class="dc-k">03</span><span class="dc-ic" aria-hidden="true">&#x1F3AF;</span><span class="dc-t">Recruiting and Talent Ops</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+</article>
+<article class="door-card reveal" tabindex="0" aria-label="Customer Service and Inbound Sales: For online retail and service businesses. Every ticket answered. Every cart saved.">
+<div class="dc-detail"><h3>Customer Service and Inbound Sales</h3><p>For online retail and service businesses. Every ticket answered. Every cart saved.</p><ul><li style="--i:0">Multi-channel support across email, chat, and DMs</li><li style="--i:1">Order management, refunds, and returns</li><li style="--i:2">Inbound sales calls and warm lead conversion</li><li style="--i:3">Genesys, Amazon Connect, OpenPhone, Zendesk</li><li style="--i:4">AI-assisted reply drafts and escalation tagging</li></ul></div>
+<div class="dc-door l" aria-hidden="true"><div class="dc-cover"><span class="dc-k">04</span><span class="dc-ic" aria-hidden="true">&#x1F4DE;</span><span class="dc-t">Customer Service and Inbound Sales</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+<div class="dc-door r" aria-hidden="true"><div class="dc-cover"><span class="dc-k">04</span><span class="dc-ic" aria-hidden="true">&#x1F4DE;</span><span class="dc-t">Customer Service and Inbound Sales</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+</article>
+<article class="door-card reveal" tabindex="0" aria-label="Social Media Management: Show up daily without you ever opening the app.">
+<div class="dc-detail"><h3>Social Media Management</h3><p>Show up daily without you ever opening the app.</p><ul><li style="--i:0">Content calendar, captions, and hashtag strategy</li><li style="--i:1">Reels and short-form editing in CapCut and Canva</li><li style="--i:2">Scheduling via SocialBee, Meta Business Suite</li><li style="--i:3">Community management and DM triage</li><li style="--i:4">AI-generated assets via Creatify and Claude.ai</li></ul></div>
+<div class="dc-door l" aria-hidden="true"><div class="dc-cover"><span class="dc-k">05</span><span class="dc-ic" aria-hidden="true">&#x1F4F1;</span><span class="dc-t">Social Media Management</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+<div class="dc-door r" aria-hidden="true"><div class="dc-cover"><span class="dc-k">05</span><span class="dc-ic" aria-hidden="true">&#x1F4F1;</span><span class="dc-t">Social Media Management</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+</article>
+<article class="door-card reveal" tabindex="0" aria-label="AI-Powered Workflows: I&#x27;m an EA who works like a small team because I deploy AI on every step.">
+<div class="dc-detail"><h3>AI-Powered Workflows</h3><p>I'm an EA who works like a small team because I deploy AI on every step.</p><ul><li style="--i:0">Custom GPTs and Claude.ai prompt libraries</li><li style="--i:1">Viktor.ai recruiting automation</li><li style="--i:2">GitHub-hosted SOPs and version control</li><li style="--i:3">Inbox, lead, and reporting automations</li><li style="--i:4">Hand-off ready playbooks for your team</li></ul></div>
+<div class="dc-door l" aria-hidden="true"><div class="dc-cover"><span class="dc-k">06</span><span class="dc-ic" aria-hidden="true">&#x1F916;</span><span class="dc-t">AI-Powered Workflows</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+<div class="dc-door r" aria-hidden="true"><div class="dc-cover"><span class="dc-k">06</span><span class="dc-ic" aria-hidden="true">&#x1F916;</span><span class="dc-t">AI-Powered Workflows</span><span class="dc-hint"><span class="h-d">Hover</span><span class="h-t">Tap</span> to open</span><span class="dc-logo">Cio<i>.</i></span></div></div>
+</article>
 </div>
 </div>
 </section>
@@ -979,6 +962,16 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
     sync();window.dispatchEvent(new CustomEvent('themechange',{detail:t}));
   });});
   sync();
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('.door-card').forEach(function(c){
+    c.addEventListener('click',function(e){if(e.pointerType==='mouse')return;var o=!c.classList.contains('is-open');
+      document.querySelectorAll('.door-card.is-open').forEach(function(x){x.classList.remove('is-open');});if(o)c.classList.add('is-open');});
+    c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.classList.toggle('is-open');}});
+    c.addEventListener('blur',function(){c.classList.remove('is-open');});
+  });
 })();
 </script>
 </body>
