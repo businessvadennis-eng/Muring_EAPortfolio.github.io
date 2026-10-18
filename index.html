@@ -313,7 +313,7 @@ header.hero{padding:96px 0 104px;overflow:hidden}
 @media(max-width:760px){.bk-embed iframe{height:900px}.bk-embed{border-radius:16px}}
 @media(max-width:560px){.cta-block{padding:48px 14px;margin:0 14px;border-radius:24px}.book-grid{gap:28px}}
 /* ===== Hero: camera-on-a-rail scroll scene (Three.js) ===== */
-.rail{position:relative;height:520vh;padding:0}
+header.hero.rail{position:relative;height:520vh;padding:0;overflow:visible}
 .rail-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .rail-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .rail-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(var(--bg-rgb),.92) 0%,rgba(var(--bg-rgb),.55) 38%,rgba(var(--bg-rgb),0) 62%)}
@@ -973,7 +973,7 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
     var cv=document.createElement('canvas');cv.width=512;cv.height=320;fn(cv.getContext('2d'));
     var tex=new THREE.CanvasTexture(cv);tex.anisotropy=4;var mat=new THREE.MeshBasicMaterial({map:tex,transparent:true});disposables.push(tex,mat);
     var g=new THREE.Group(),card=new THREE.Mesh(cardGeo,mat),sh=new THREE.Mesh(shadowGeo,shadowMat);sh.position.set(.06,-.08,-.06);g.add(sh);g.add(card);
-    var u=.1+i*.1,p=curve.getPointAt(u),tan=curve.getTangentAt(u),side=new THREE.Vector3().crossVectors(tan,up).normalize().multiplyScalar(1.35*(i%2?1:-1));
+    var u=.1+i*.1,p=curve.getPointAt(u),tan=curve.getTangentAt(u),side=new THREE.Vector3().crossVectors(tan,up).normalize().multiplyScalar(1.35*(i%2?-1:1));
     g.position.copy(p).add(side);g.position.y+=.15;
     var back=curve.getPointAt(Math.max(0,u-.08));back.y+=.25;g.lookAt(back);
     scene.add(g);cards.push({g:g,u:u,y:g.position.y,s:1,i:i,tex:tex});
