@@ -382,6 +382,17 @@ transition:transform .6s cubic-bezier(.32,.72,0,1),opacity .45s ease}
 @media(hover:none){.gfx-cat:hover .gfx-fac{transform:none;opacity:1}.gfx-cat.is-peek .gfx-fac{transform:translateY(-101%);opacity:0}}
 @media(prefers-reduced-motion:reduce){.gfx-fac{transition:opacity .01s}}
 
+/* ===== Mobile spacing fixes ===== */
+@media(max-width:880px){
+  .rail-cap,.rail-cap.on{top:clamp(88px,13vh,120px);bottom:auto;transform:none}
+  .rail-cap{transform:translateY(10px)}
+  .rail-cap.on{transform:none}
+  .rail-stage::after{background:linear-gradient(180deg,rgba(var(--bg-rgb),.96) 0%,rgba(var(--bg-rgb),.85) 55%,rgba(var(--bg-rgb),.2) 85%,rgba(var(--bg-rgb),0) 100%)}
+  section{padding:68px 0}
+  #about{padding-bottom:40px}
+  #book{padding-top:40px}
+}
+
 /* ===== Results: impact report download ===== */
 .report-dl{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:22px 26px;border:1px solid var(--line);border-radius:18px;background:rgba(var(--surface-rgb),.6)}
 .report-dl-t b{display:block;color:var(--text);font-size:16px;font-weight:700;margin-bottom:4px}
@@ -454,7 +465,7 @@ nav .container{position:relative}
 .theme-sw button:hover{color:var(--text)}
 .theme-sw button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .theme-sw button:focus{outline:none}.theme-sw button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media(max-width:760px){.theme-sw{right:16px}}
+@media(max-width:760px){.theme-sw{top:50%;right:80px;transform:translateY(-50%);box-shadow:none}.theme-sw button{width:30px;height:28px}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('cio-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 </head>
