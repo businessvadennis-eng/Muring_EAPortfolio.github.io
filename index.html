@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0F1424;--surface:#1C2340;--accent:#E8B96A;--text:#F5F3EE;--muted:#A9AEC2;--bg-rgb:15,20,36;--surface-rgb:28,35,64;--accent-rgb:232,185,106;--text-rgb:245,243,238;--muted-rgb:169,174,194;--surface-2:#252D52;--accent-hover:#F0CB8A;--on-accent:var(--bg);--shadow-rgb:5,8,18;--line:rgba(var(--muted-rgb),0.2);--line-soft:rgba(var(--muted-rgb),0.12);--max:1200px;}
+:root{--bg:#123642;--surface:#16404D;--accent:#DDA853;--text:#F3F8F7;--muted:#A6CDC6;--bg-rgb:18,54,66;--surface-rgb:22,64,77;--accent-rgb:221,168,83;--text-rgb:243,248,247;--muted-rgb:166,205,198;--surface-2:#1E5262;--accent-hover:#E8BE76;--on-accent:#16404D;--shadow-rgb:6,22,28;--line:rgba(var(--muted-rgb),0.2);--line-soft:rgba(var(--muted-rgb),0.12);--max:1200px;}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -440,8 +440,8 @@ header.hero.rail{position:relative;height:230vh;padding:0;overflow:visible}
   .rail-hint{display:none}
 }
 @media(max-width:560px){.rail-cap .cta-row .btn{padding:13px 20px}.rail-cap .proof{display:none}}
-:root[data-theme="light"]{--bg:#F7F5F0;--surface:#FFFFFF;--surface-2:#EDE9DF;--text:#141A2E;--muted:#4E546B;--accent:#8A5D14;--accent-hover:#6F4A0F;--on-accent:#FFFFFF;
---bg-rgb:247,245,240;--surface-rgb:255,255,255;--accent-rgb:138,93,20;--text-rgb:20,26,46;--muted-rgb:78,84,107;--shadow-rgb:60,52,30;
+:root[data-theme="light"]{--bg:#EEF6F4;--surface:#FFFFFF;--surface-2:#D8EAE6;--text:#16404D;--muted:#3D6670;--accent:#7E5A12;--accent-hover:#664910;--on-accent:#FFFFFF;
+--bg-rgb:238,246,244;--surface-rgb:255,255,255;--accent-rgb:126,90,18;--text-rgb:22,64,77;--muted-rgb:61,102,112;--shadow-rgb:22,64,77;
 --line:rgba(var(--muted-rgb),0.22);--line-soft:rgba(var(--muted-rgb),0.14);color-scheme:light}
 :root{color-scheme:dark}
 :root[data-theme="light"] :root[data-theme="light"] .avatar{color:#fff}
@@ -970,7 +970,7 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
   var renderer;try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,powerPreference:'low-power'});}catch(e){window.addEventListener('scroll',function(){setSection(secFor(rawProgress()));},{passive:true});return;}
   var css=getComputedStyle(document.documentElement);
   function col(v,f){var c=(css.getPropertyValue(v)||'').trim();return c||f;}
-  var BG=col('--bg','#0F1424'),ACC=col('--accent','#E8B96A'),TXT='#0F1424',PAPER=col('--text','#F5F3EE'),MUT='#6B7088';
+  var BG=col('--bg','#123642'),ACC=col('--accent','#DDA853'),TXT='#16404D',PAPER=col('--text','#F5F3EE'),MUT='#4E6F76';
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setClearColor(BG,1);
   var scene=new THREE.Scene();scene.fog=new THREE.Fog(BG,3.5,15);
   window.addEventListener('themechange',function(){var c=getComputedStyle(document.documentElement),bg=c.getPropertyValue('--bg').trim(),ac=c.getPropertyValue('--accent').trim();renderer.setClearColor(bg,1);scene.fog.color.set(bg);rm.color.set(ac);if(reduce)render();});
@@ -990,14 +990,14 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
   function pill(c,s,x,y,bg,fg){c.font='700 17px Manrope, system-ui, sans-serif';var w=c.measureText(s).width+28;rr(c,x,y,w,34,17);c.fillStyle=bg;c.fill();c.fillStyle=fg;c.fillText(s,x+14,y+23);return w;}
   var draw=[
     function(c){base(c,'Payment notice');t(c,'$2,480.00',36,138,'700 54px Fraunces, Georgia, serif');t(c,'Vendor invoice approved',36,180,'500 22px Manrope, system-ui, sans-serif',MUT);pill(c,'Paid',36,222,ACC,TXT);t(c,'Due Fri',380,246,'600 18px Manrope, system-ui, sans-serif',MUT);},
-    function(c){base(c,'Thursday');var ev=[['9:00','Board prep',ACC],['11:30','Client call','#C9CEDD'],['2:00','Focus time','#E7E2D6']];ev.forEach(function(e,k){var y=78+k*72;t(c,e[0],36,y+38,'600 18px Manrope, system-ui, sans-serif',MUT);rr(c,112,y+8,360,50,14);c.fillStyle=e[2];c.fill();t(c,e[1],132,y+40,'700 20px Manrope, system-ui, sans-serif');});},
-    function(c){base(c,'Client chat');rr(c,36,76,330,62,22);c.fillStyle='#E4E1D8';c.fill();t(c,'Can we move to 3pm?',58,115,'500 21px Manrope, system-ui, sans-serif');rr(c,150,156,326,62,22);c.fillStyle=ACC;c.fill();t(c,'Done. Invite updated.',172,195,'600 21px Manrope, system-ui, sans-serif');t(c,'Read 10:42',372,258,'500 16px Manrope, system-ui, sans-serif',MUT);},
-    function(c){base(c,'Hours back / week');var h=[60,90,80,130,150,190];h.forEach(function(v,k){rr(c,40+k*60,280-v,38,v,8);c.fillStyle=k===5?ACC:'#D9D5CB';c.fill();});t(c,'20',400,150,'700 64px Fraunces, Georgia, serif');t(c,'hrs',410,182,'600 18px Manrope, system-ui, sans-serif',MUT);},
-    function(c){base(c,'Inbox rules');[['Flag urgent mail',1],['Draft replies',1],['Weekend pings',0]].forEach(function(r,k){var y=96+k*66;t(c,r[0],36,y+22,'600 22px Manrope, system-ui, sans-serif');rr(c,390,y-4,76,38,19);c.fillStyle=r[1]?ACC:'#D4D0C6';c.fill();c.beginPath();c.arc(r[1]?447:409,y+15,14,0,7);c.fillStyle='#fff';c.fill();});},
-    function(c){base(c,'Your assistant');c.beginPath();c.arc(92,150,52,0,7);c.fillStyle=TXT;c.fill();t(c,'Cio',66,166,'700 40px Fraunces, Georgia, serif',PAPER);t(c,'Cio',170,140,'700 34px Fraunces, Georgia, serif');t(c,'Executive Assistant',170,176,'500 20px Manrope, system-ui, sans-serif',MUT);pill(c,'Available',170,214,'#E7E2D6',TXT);},
-    function(c){base(c,'Today');[['Confirm vendor quotes',1],['Send interview invites',1],['Book flights',1],['Weekly report',0]].forEach(function(r,k){var y=84+k*54;rr(c,36,y,30,30,8);if(r[1]){c.fillStyle=ACC;c.fill();c.strokeStyle=TXT;c.lineWidth=3;c.beginPath();c.moveTo(43,y+16);c.lineTo(49,y+22);c.lineTo(60,y+9);c.stroke();}else{c.strokeStyle='#B9B5AB';c.lineWidth=2;c.stroke();}t(c,r[0],84,y+23,'600 20px Manrope, system-ui, sans-serif',r[1]?MUT:TXT);});},
-    function(c){c.clearRect(0,0,512,320);c.save();rr(c,6,6,500,308,34);c.clip();var g=c.createLinearGradient(0,0,0,320);g.addColorStop(0,'#F4C98A');g.addColorStop(.55,'#E89B7A');g.addColorStop(1,'#3B4A7A');c.fillStyle=g;c.fillRect(0,0,512,320);
-      c.beginPath();c.arc(330,150,46,0,7);c.fillStyle='#FFE7B8';c.fill();c.fillStyle='#2A3460';c.beginPath();c.moveTo(0,250);c.lineTo(120,170);c.lineTo(220,240);c.lineTo(320,190);c.lineTo(512,260);c.lineTo(512,320);c.lineTo(0,320);c.fill();
+    function(c){base(c,'Thursday');var ev=[['9:00','Board prep',ACC],['11:30','Client call','#A6CDC6'],['2:00','Focus time','#D8EAE6']];ev.forEach(function(e,k){var y=78+k*72;t(c,e[0],36,y+38,'600 18px Manrope, system-ui, sans-serif',MUT);rr(c,112,y+8,360,50,14);c.fillStyle=e[2];c.fill();t(c,e[1],132,y+40,'700 20px Manrope, system-ui, sans-serif');});},
+    function(c){base(c,'Client chat');rr(c,36,76,330,62,22);c.fillStyle='#DCEBE8';c.fill();t(c,'Can we move to 3pm?',58,115,'500 21px Manrope, system-ui, sans-serif');rr(c,150,156,326,62,22);c.fillStyle=ACC;c.fill();t(c,'Done. Invite updated.',172,195,'600 21px Manrope, system-ui, sans-serif');t(c,'Read 10:42',372,258,'500 16px Manrope, system-ui, sans-serif',MUT);},
+    function(c){base(c,'Hours back / week');var h=[60,90,80,130,150,190];h.forEach(function(v,k){rr(c,40+k*60,280-v,38,v,8);c.fillStyle=k===5?ACC:'#BFDAD5';c.fill();});t(c,'20',400,150,'700 64px Fraunces, Georgia, serif');t(c,'hrs',410,182,'600 18px Manrope, system-ui, sans-serif',MUT);},
+    function(c){base(c,'Inbox rules');[['Flag urgent mail',1],['Draft replies',1],['Weekend pings',0]].forEach(function(r,k){var y=96+k*66;t(c,r[0],36,y+22,'600 22px Manrope, system-ui, sans-serif');rr(c,390,y-4,76,38,19);c.fillStyle=r[1]?ACC:'#BFDAD5';c.fill();c.beginPath();c.arc(r[1]?447:409,y+15,14,0,7);c.fillStyle='#fff';c.fill();});},
+    function(c){base(c,'Your assistant');c.beginPath();c.arc(92,150,52,0,7);c.fillStyle=TXT;c.fill();t(c,'Cio',66,166,'700 40px Fraunces, Georgia, serif',PAPER);t(c,'Cio',170,140,'700 34px Fraunces, Georgia, serif');t(c,'Executive Assistant',170,176,'500 20px Manrope, system-ui, sans-serif',MUT);pill(c,'Available',170,214,'#D8EAE6',TXT);},
+    function(c){base(c,'Today');[['Confirm vendor quotes',1],['Send interview invites',1],['Book flights',1],['Weekly report',0]].forEach(function(r,k){var y=84+k*54;rr(c,36,y,30,30,8);if(r[1]){c.fillStyle=ACC;c.fill();c.strokeStyle=TXT;c.lineWidth=3;c.beginPath();c.moveTo(43,y+16);c.lineTo(49,y+22);c.lineTo(60,y+9);c.stroke();}else{c.strokeStyle='#8DB3AC';c.lineWidth=2;c.stroke();}t(c,r[0],84,y+23,'600 20px Manrope, system-ui, sans-serif',r[1]?MUT:TXT);});},
+    function(c){c.clearRect(0,0,512,320);c.save();rr(c,6,6,500,308,34);c.clip();var g=c.createLinearGradient(0,0,0,320);g.addColorStop(0,'#F4C98A');g.addColorStop(.55,'#E89B7A');g.addColorStop(1,'#16404D');c.fillStyle=g;c.fillRect(0,0,512,320);
+      c.beginPath();c.arc(330,150,46,0,7);c.fillStyle='#FFE7B8';c.fill();c.fillStyle='#123642';c.beginPath();c.moveTo(0,250);c.lineTo(120,170);c.lineTo(220,240);c.lineTo(320,190);c.lineTo(512,260);c.lineTo(512,320);c.lineTo(0,320);c.fill();
       c.fillStyle='rgba(15,20,36,.55)';c.fillRect(0,262,512,58);t(c,'Hawaii trip · booked',30,300,'700 22px Manrope, system-ui, sans-serif','#F5F3EE');c.restore();}
   ];
   // shadow texture
