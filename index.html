@@ -9,6 +9,8 @@
 <meta property="og:title" content="Cio | Executive and Operations Assistant for Founders" />
 <meta property="og:description" content="Get 20 hours back every week. I run the back-end of your business so you can stay in your zone." />
 <meta property="og:type" content="website" />
+<link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -476,6 +478,26 @@ nav .container{position:relative}
 .theme-sw button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .theme-sw button:focus{outline:none}.theme-sw button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media(max-width:760px){.theme-sw{top:50%;right:80px;transform:translateY(-50%);box-shadow:none}.theme-sw button{width:30px;height:28px}}
+.footer-cta{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:center;text-align:left;background:linear-gradient(135deg,var(--surface-2) 0%,var(--surface) 60%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:24px;padding:44px 48px;margin:0 0 40px;position:relative;overflow:hidden}
+.footer-cta::before{content:"";position:absolute;top:-140px;left:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(var(--accent-rgb),0.18),transparent 60%);animation:float 14s ease-in-out infinite;pointer-events:none}
+.footer-cta > *{position:relative;z-index:1}
+.footer-cta .footer-cta-title{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin-bottom:12px;color:var(--text)}
+.footer-cta p{color:var(--muted);font-size:16px;max-width:460px}
+.footer-cta-actions{display:flex;flex-direction:column;gap:12px}
+.footer-cta-actions .btn{justify-content:center}
+.footer-email{font-size:13px;color:var(--muted);text-align:center}
+@media(max-width:760px){.footer-cta{grid-template-columns:1fr;gap:24px;padding:30px 22px}}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:0 0 30px;padding-bottom:30px;border-bottom:1px solid var(--line)}
+.footer-links a{color:var(--muted);font-size:14px;font-weight:500}
+.footer-links a:hover{color:var(--text)}
+.to-top{position:fixed;bottom:24px;right:24px;z-index:50;width:48px;height:48px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transform:translateY(20px);pointer-events:none;transition:all .3s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{background:var(--accent);color:var(--on-accent);border-color:var(--accent);transform:translateY(-3px)}
+.to-top svg{width:20px;height:20px}
+.nav-links a:not(.nav-cta){position:relative}
+.nav-links a.is-active{color:var(--text)}
+@media(min-width:761px){.nav-links a:not(.nav-cta).is-active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;background:var(--accent)}}
+@media(max-width:760px){.nav-links a.is-active{color:var(--accent)}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('cio-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 </head>
@@ -781,6 +803,21 @@ nav .container{position:relative}
 </section>
 <footer>
 <div class="container">
+<div class="footer-cta">
+<div>
+<div class="eyebrow">Ready when you are</div>
+<h2 class="footer-cta-title">Let's make your week lighter.</h2>
+<p>Send one email with what's eating your week. I reply within 24 hours on weekdays.</p>
+</div>
+<div class="footer-cta-actions">
+<a href="mailto:clientcontact.cio@gmail.com?subject=Let's%20work%20together" class="btn btn-primary">Email me <span class="arrow">&#x2192;</span></a>
+<button type="button" class="btn btn-ghost footer-copy" data-email="clientcontact.cio@gmail.com" aria-label="Copy my email address">Copy email</button>
+<span class="footer-email">clientcontact.cio@gmail.com</span>
+</div>
+</div>
+<nav class="footer-links" aria-label="Footer">
+<a href="#services">Services</a><a href="#graphics">Graphics</a><a href="#process">Process</a><a href="#results">Results</a><a href="#voices">Voices</a><a href="#about">About</a><a href="#faq">FAQ</a>
+</nav>
 <div class="brand">Cio<span>.</span></div>
 <p>Executive and Operations Assistant, based in Davao City, Philippines</p>
 <div class="footer-icons">
@@ -1115,6 +1152,18 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
       if(!c.classList.contains('is-peek')){e.preventDefault();cards.forEach(function(x){x.classList.remove('is-peek');});c.classList.add('is-peek');}
     });
   });
+})();
+</script>
+<button class="to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+<script>
+(function(){
+var links=[].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+var secs=Object.keys(map).map(function(id){return document.getElementById(id);}).filter(Boolean);
+if('IntersectionObserver' in window){var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('is-active');});map[e.target.id].classList.add('is-active');}});},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(function(s){spy.observe(s);});}
+var top=document.querySelector('.to-top');
+if(top){window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>700);});top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}
+document.querySelectorAll('.footer-copy').forEach(function(b){b.addEventListener('click',function(){var e=b.getAttribute('data-email');var done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy email';},2000);};if(navigator.clipboard){navigator.clipboard.writeText(e).then(done,function(){window.location.href='mailto:'+e;});}else{window.location.href='mailto:'+e;}});});
 })();
 </script>
 </body>
