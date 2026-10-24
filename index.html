@@ -610,7 +610,17 @@ nav .container{position:relative}
 .bk-confirm.booked .bk-check{display:block}
 .bk-confirm.booked.pop .bk-check{transform:none;opacity:1}
 .bk-note{font-size:13px;color:var(--ink-2);margin-top:10px;min-height:1.2em;text-align:center}
+.bk-note a{color:var(--acc);text-decoration:underline}
 .bk-day:not(:disabled):active,.bk-slot:active,.bk-confirm:not(:disabled):active,.bk-nav:not(:disabled):active{transform:scale(.94);transition-duration:90ms;transition-delay:0s}
+.bk-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.bk-f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.bk-f-wide{grid-column:1/-1}
+.bk-f span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.bk-f em{font-style:normal;text-transform:none;letter-spacing:0;font-weight:500;opacity:.8}
+.bk-f input{font:inherit;font-size:15px;color:var(--ink);background:rgba(240,242,235,.1);border:1px solid var(--line-c);border-radius:10px;padding:10px 12px;width:100%}
+.bk-f input::placeholder{color:rgba(240,242,235,.45)}
+.bk-f input:focus{outline:none}.bk-f input:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+@media(max-width:420px){.bk-fields{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.bk-slot{transition-delay:0s!important}}
 /* wide booking layout: calendar and times side by side, filling the row */
 @media(min-width:1100px){
@@ -623,7 +633,8 @@ nav .container{position:relative}
   .bk-side .bk-slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
   .bk-side .bk-hint{grid-column:1/-1}
   .bk-slot{padding:12px 14px;font-size:15px}
-  .bk-side .bk-confirm{margin-top:auto;height:56px}
+  .bk-side .bk-fields{grid-template-columns:1fr;gap:12px}
+  .bk-side .bk-confirm{margin-top:18px;height:56px}
   .bk-side .bk-ph{margin:16px 0}
   .bk-month{font-size:22px}
   .bk-head{margin-bottom:20px}
@@ -932,6 +943,11 @@ nav .container{position:relative}
 <div class="bk-slots-h"><span class="bk-slots-t">Available times</span><span class="bk-tz"></span></div>
 <div class="bk-slots" role="group" aria-label="Choose a time"><p class="bk-hint">Pick a day to see open times.</p></div>
 <p class="bk-ph" aria-live="polite"></p>
+<div class="bk-fields">
+<label class="bk-f"><span>Your name</span><input type="text" name="name" autocomplete="name" required></label>
+<label class="bk-f"><span>Your email</span><input type="email" name="email" autocomplete="email" required></label>
+<label class="bk-f bk-f-wide"><span>What do you need help with? <em>(optional)</em></span><input type="text" name="topic" maxlength="200"></label>
+</div>
 <button type="button" class="bk-confirm" disabled><span class="bk-confirm-t">Confirm</span><svg class="bk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
 <p class="bk-note" aria-live="polite"></p>
 </div>
@@ -1296,10 +1312,14 @@ document.querySelectorAll('.footer-copy').forEach(function(b){b.addEventListener
   function yourText(t){return fmt(t,tz,{weekday:'long',month:'long',day:'numeric'})+' at '+fmt(t,tz,{hour:'numeric',minute:'2-digit'})+' '+abbr(tz,t);}
   function setReady(){
     btn.classList.remove('booked','pop');btnT.textContent='Confirm';note.textContent='';
-    btn.disabled=!slot;btn.classList.toggle('ready',!!slot);
+    var ok=!!slot&&filled();btn.disabled=!ok;btn.classList.toggle('ready',ok);
+    if(slot&&!filled())note.textContent='Add your name and email to confirm.';
     if(slot){phEl.innerHTML='That&#x2019;s <b></b> for me.';phEl.querySelector('b').textContent=homeText(slot);phEl.classList.add('on');}
     else{phEl.classList.remove('on');}
   }
+  var fName=root.querySelector('[name="name"]'),fEmail=root.querySelector('[name="email"]'),fTopic=root.querySelector('[name="topic"]');
+  function filled(){return fName.value.trim().length>1&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fEmail.value.trim());}
+  [fName,fEmail].forEach(function(f){f.addEventListener('input',function(){if(!btn.classList.contains('booked'))setReady();});});
   function setZone(){tzEl.textContent=abbr(tz)||off(tz);}
   sel.addEventListener('change',function(){
     tz=sel.value;today=todayIn(tz);
@@ -1319,14 +1339,27 @@ document.querySelectorAll('.footer-copy').forEach(function(b){b.addEventListener
     setReady();
   });
   navs.forEach(function(n){n.addEventListener('click',function(){if(n.disabled)return;view=new Date(view.getFullYear(),view.getMonth()+(+n.dataset.dir),1);renderDays();});});
+  var sending=false;
   btn.addEventListener('click',function(){
-    if(!slot||btn.classList.contains('booked'))return;
-    var yours=yourText(slot),mine=homeText(slot);
-    btn.classList.add('booked');btnT.textContent='Booked';requestAnimationFrame(function(){btn.classList.add('pop');});
-    note.textContent='Your email app is opening so you can send the request.';
-    var subj='Discovery call request: '+mine,
-        body='Hi Cio,\n\nI’d like to book a 30-minute discovery call.\n\nMy time: '+yours+'\nYour time: '+mine+'\n\nName:\nCompany:\nWhat I need help with:\n';
-    window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+    if(!slot||!filled()||sending||btn.classList.contains('booked'))return;
+    var yours=yourText(slot),mine=homeText(slot),name=fName.value.trim(),email=fEmail.value.trim(),topic=fTopic.value.trim();
+    sending=true;btn.disabled=true;btnT.textContent='Sending…';note.textContent='';
+    // Sends the request straight to Cio's inbox through FormSubmit (no email app needed on the visitor's side)
+    fetch('https://formsubmit.co/ajax/'+EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({_subject:'New discovery call booking: '+mine,_template:'table',_captcha:'false',
+        name:name,email:email,'Cio time (Davao)':mine,'Their time':yours,'Their time zone':tz,'What they need help with':topic||'(not given)'})})
+    .then(function(r){return r.json().then(function(j){if(!r.ok||String(j.success)!=='true')throw new Error(j.message||'send failed');});})
+    .then(function(){
+      sending=false;btn.classList.add('booked');btnT.textContent='Booked';requestAnimationFrame(function(){btn.classList.add('pop');});
+      note.textContent='Request sent for '+yours+'. I’ll email you at '+email+' within 24 hours to confirm.';
+    })
+    .catch(function(){ // fall back to the visitor's email app
+      sending=false;btn.disabled=false;btnT.textContent='Confirm';
+      note.innerHTML='Couldn’t send that just now. <a href="#" class="bk-mail">Email the request instead</a>.';
+      note.querySelector('.bk-mail').addEventListener('click',function(e){e.preventDefault();
+        var subj='Discovery call request: '+mine,body='Hi Cio,\n\nI’d like to book a 30-minute discovery call.\n\nMy time: '+yours+'\nYour time: '+mine+'\n\nName: '+name+'\nEmail: '+email+'\nWhat I need help with: '+topic+'\n';
+        window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);});
+    });
   });
   setZone();renderDays();
 })();
