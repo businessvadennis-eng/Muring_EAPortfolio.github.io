@@ -610,6 +610,25 @@ nav .container{position:relative}
 .bk-note{font-size:13px;color:var(--ink-2);margin-top:10px;min-height:1.2em;text-align:center}
 .bk-day:not(:disabled):active,.bk-slot:active,.bk-confirm:not(:disabled):active,.bk-nav:not(:disabled):active{transform:scale(.94);transition-duration:90ms;transition-delay:0s}
 @media(prefers-reduced-motion:reduce){.bk-slot{transition-delay:0s!important}}
+/* wide booking layout: calendar and times side by side, filling the row */
+@media(min-width:1100px){
+  .book{grid-template-columns:minmax(300px,.8fr) 2fr;gap:56px}
+  .bk{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;padding:36px 40px}
+  .bk-side{display:flex;flex-direction:column;border-left:1px solid var(--line-c);padding-left:40px}
+  .bk-side .bk-tzrow{margin-top:0;padding-top:0;border-top:0;flex-direction:column;align-items:stretch;gap:8px}
+  .bk-side .bk-tzwrap{max-width:none}
+  .bk-side .bk-slots-h{margin-top:22px}
+  .bk-side .bk-slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+  .bk-side .bk-hint{grid-column:1/-1}
+  .bk-slot{padding:12px 14px;font-size:15px}
+  .bk-side .bk-confirm{margin-top:auto;height:56px}
+  .bk-side .bk-ph{margin:16px 0}
+  .bk-month{font-size:22px}
+  .bk-head{margin-bottom:20px}
+  .bk-dow,.bk-days{gap:10px}
+  .bk-dow span{font-size:12px}
+  .bk-day{font-size:16px;border-radius:14px}
+}
 @media(max-width:420px){.bk-tzrow{flex-direction:column;align-items:stretch;gap:8px}.bk-tzwrap{max-width:none}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('cio-theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
@@ -931,6 +950,7 @@ nav .container{position:relative}
 <p class="book-sub">Tell me what&#x2019;s piling up and I&#x2019;ll tell you what I can take off your plate. No pitch, just a quick chat.</p>
 </div>
 <div class="bk" aria-label="Book a discovery call">
+<div class="bk-cal">
 <div class="bk-head">
 <button type="button" class="bk-nav" data-dir="-1" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
 <div class="bk-month" aria-live="polite"></div>
@@ -938,12 +958,15 @@ nav .container{position:relative}
 </div>
 <div class="bk-dow" aria-hidden="true"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
 <div class="bk-days" role="group" aria-label="Choose a day"></div>
+</div>
+<div class="bk-side">
 <label class="bk-tzrow"><span class="bk-slots-t">Your time zone</span><span class="bk-tzwrap"><select class="bk-tzsel" aria-label="Your time zone"></select><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></label>
 <div class="bk-slots-h"><span class="bk-slots-t">Available times</span><span class="bk-tz"></span></div>
 <div class="bk-slots" role="group" aria-label="Choose a time"><p class="bk-hint">Pick a day to see open times.</p></div>
 <p class="bk-ph" aria-live="polite"></p>
 <button type="button" class="bk-confirm" disabled><span class="bk-confirm-t">Confirm</span><svg class="bk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
 <p class="bk-note" aria-live="polite"></p>
+</div>
 </div>
 </div>
 </div>
