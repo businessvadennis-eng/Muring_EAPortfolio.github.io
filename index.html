@@ -1265,8 +1265,8 @@ document.querySelectorAll('.footer-copy').forEach(function(b){b.addEventListener
 (function(){
   var root=document.querySelector('.bk');if(!root)return;
   var EMAIL='clientcontact.cio@gmail.com',HOME='Asia/Manila',HOME_NAME='Davao City';
-  var SLOTS_UTC=[13,14.5,16,17.5,19]; // within Cio's 7 PM to 5 AM Davao shift, kept in UTC
-  var SHIFT_DAYS=[0,2,4,6]; // shifts starting Sun, Tue, Thu, Sat evening in Davao (a shift runs past midnight, so it counts as the day it starts)
+  var SLOTS_UTC=[16,17,18,19,20]; // 12 AM to 4 AM start times in Davao (UTC+8), so every call ends by 5 AM
+  var SHIFT_DAYS=[0,1,2,3,4,5,6]; // available every day
   var homeDow=new Intl.DateTimeFormat('en-US',{timeZone:HOME,weekday:'short'}),DOW={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
   function onShift(t){return SHIFT_DAYS.indexOf(DOW[homeDow.format(new Date(t.getTime()-8*36e5))])>-1;}
   var ZONES=[['Pacific/Honolulu','Honolulu'],['America/Anchorage','Anchorage'],['America/Los_Angeles','Los Angeles / Pacific'],['America/Denver','Denver / Mountain'],['America/Phoenix','Phoenix'],['America/Chicago','Chicago / Central'],['America/New_York','New York / Eastern'],['America/Halifax','Halifax / Atlantic'],['America/Sao_Paulo','São Paulo'],['Europe/London','London'],['Europe/Paris','Paris / Central Europe'],['Africa/Johannesburg','Johannesburg'],['Asia/Dubai','Dubai'],['Asia/Kolkata','India'],['Asia/Singapore','Singapore'],['Asia/Manila','Philippines'],['Asia/Hong_Kong','Hong Kong'],['Asia/Tokyo','Tokyo'],['Australia/Perth','Perth'],['Australia/Brisbane','Brisbane'],['Australia/Adelaide','Adelaide'],['Australia/Sydney','Sydney / Melbourne'],['Pacific/Auckland','Auckland']];
