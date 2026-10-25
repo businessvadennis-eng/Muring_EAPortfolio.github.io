@@ -683,7 +683,7 @@ nav .container{position:relative}
 <div class="tilt-track">
 <div class="tilt-copy">
 <div class="badge"><span class="dot"></span> Accepting 2 new clients this quarter</div>
-<h1 class="hero-h1">Every hour in your inbox is an hour you&#x2019;re not leading. <span class="tw-line"><span class="tw-type" aria-live="off">Hand it to me.</span><span class="tw-bar" aria-hidden="true"></span></span></h1>
+<h1 class="hero-h1">Some work needs you. The rest is stealing your time. <span class="tw-line"><span class="tw-type" aria-live="off">I&#x2019;ll handle the rest.</span><span class="tw-bar" aria-hidden="true"></span></span></h1>
 <div class="cta-row">
 <a href="#contact" class="btn btn-primary">Let&#x2019;s talk <span class="arrow">&#x2192;</span></a>
 <a href="#services" class="btn btn-ghost">See what I do</a>
@@ -1144,14 +1144,14 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
 (function(){
   var span=document.querySelector('.tw-type'),caret=document.querySelector('.tw-bar'),line=document.querySelector('.tw-line');
   if(!span||!caret)return;
-  var P=['Hand it to me.','Hand me the inbox.','Hand me the calendar.'];
+  var P=['I\u2019ll handle the rest.','You get your time back.'];
   function reserve(){ // hold the height of the tallest phrase at this width so the empty phase never collapses
     var keep=span.textContent,h=0;P.forEach(function(t){span.textContent=t;h=Math.max(h,line.offsetHeight);});
     span.textContent=keep;line.style.minHeight=h+'px';}
   line.style.minHeight='';reserve();var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){line.style.minHeight='';reserve();},150);});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){line.style.minHeight='';reserve();});
   span.textContent=P[0];
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||!window.gsap||!window.TextPlugin)return;
+  if(P.length<2||window.matchMedia('(prefers-reduced-motion: reduce)').matches||!window.gsap||!window.TextPlugin)return;
   gsap.registerPlugin(TextPlugin);
   var i=0;
   function cycle(){
