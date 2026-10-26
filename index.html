@@ -1109,10 +1109,10 @@ h2 em,.hero-h1 em{font-family:var(--serif);font-style:italic;font-weight:400;let
 section p{max-width:68ch}
 footer p{max-width:none}
 /* 4. section headers: numbered ledger rule instead of floating pill eyebrows */
-section>.container>.reveal:first-child .eyebrow,section>.container.aud .eyebrow,section>.process>.eyebrow,.about-card>.eyebrow,.book-copy>.eyebrow{
+section:not(#voices)>.container>.reveal:first-child .eyebrow,section>.container.aud .eyebrow,section>.process>.eyebrow,.book-copy>.eyebrow{
   counter-increment:sec;display:flex;align-items:center;gap:14px;width:100%;margin:0 0 26px;padding-top:14px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-section>.container>.reveal:first-child .eyebrow::before,section>.container.aud .eyebrow::before,section>.process>.eyebrow::before,.about-card>.eyebrow::before,.book-copy>.eyebrow::before{
+section:not(#voices)>.container>.reveal:first-child .eyebrow::before,section>.container.aud .eyebrow::before,section>.process>.eyebrow::before,.book-copy>.eyebrow::before{
   content:counter(sec,decimal-leading-zero);color:var(--accent-ink)}
 .eyebrow{font-family:var(--mono);letter-spacing:.06em}
 section{padding:84px 0}
@@ -1200,21 +1200,15 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 .af{border-radius:12px;box-shadow:0 26px 50px -36px rgba(var(--shadow-rgb),.55)}
 .pf-dotn{border-radius:10px}
 .pf-node[aria-pressed="true"] .pf-dotn::after{border-radius:14px}
-/* ---------------- VOICES: editorial quote, no card ---------------- */
-.qs{max-width:none;margin-top:0}
-.qs-view{background:transparent;border:0;border-radius:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.qs-slide{padding:48px 0;justify-content:flex-start}
-.qs-fig{align-items:flex-start;text-align:left;max-width:900px}
-.qs-q p{max-width:34ch;font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.9vw,40px);line-height:1.14;letter-spacing:-.01em}
-.qs-cap{flex-direction:row;gap:10px;align-items:baseline}
-.qs-cap b::after{content:" \2014"}
-.qs-dots{justify-content:flex-start}
+/* about + voices keep their original look */
+#voices .eyebrow,#about .about-card>.eyebrow{font-family:'Manrope',system-ui,sans-serif;letter-spacing:3px;font-size:12px}
+#voices h2,#about h2{font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-1px;max-width:820px;text-wrap:wrap}
+#voices .section-sub{font-size:18px;color:var(--muted);max-width:680px;margin-bottom:40px}
+#about .about-body p,#voices p{max-width:none}
 /* ---------------- FAQ ---------------- */
 .faq-item{border-color:var(--rule)}
 .faq-toggle{border-radius:6px}
 /* ---------------- ABOUT + BOOKING ---------------- */
-.about-body p{color:var(--body);max-width:60ch}
-.about-body p:first-child{color:var(--text)}
 .book{border-top:0;padding-top:0}
 .book-copy h2{font-size:clamp(36px,4vw,56px)}
 .book-sub{font-size:18px;color:var(--body)}
@@ -1394,14 +1388,14 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 <h3>Operations Assistant</h3>
 <p>Build the systems your business needed yesterday.</p>
 <ul>
-<li>SOPs, workflows, and automation</li>
+<li>Workflows, task tracking and automation</li>
 <li>Project management end to end</li>
 <li>CRM and database hygiene</li>
 <li>Reporting dashboards and KPIs</li>
 <li>AI-drafted documentation and process maps</li>
 </ul>
 <span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
-<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Teams whose processes live in one person&#x2019;s head</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">Written SOPs, clean data and reports you can run without chasing anyone</p><span class="svc-ov-w">Operations Assistant</span></div>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Teams whose processes live in one person&#x2019;s head</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">Clean data, tidy workflows and reports you can run without chasing anyone</p><span class="svc-ov-w">Operations Assistant</span></div>
 </div>
 <div class="service reveal" tabindex="0" style="--d:4s">
 <div class="icon fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="fi-bell"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2H4.5z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></g></svg></div>
@@ -1452,7 +1446,7 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 <ul>
 <li>Custom GPTs and Claude.ai prompt libraries</li>
 <li>Viktor.ai recruiting automation</li>
-<li>GitHub-hosted SOPs and version control</li>
+<li>Shared how-to docs and checklists</li>
 <li>Inbox, lead, and reporting automations</li>
 <li>Hand-off ready playbooks for your team</li>
 </ul>
@@ -1488,8 +1482,8 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 <div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x2696;</span><div><b>Workload review</b><small>Week 1 findings</small></div></div>
 <div class="af-cols"><div><span class="af-tag y">Handle now</span><div class="af-c" style="--k:0"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Inbox triage</div><div class="af-c" style="--k:1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Calendar and travel</div><div class="af-c" style="--k:2"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Meeting notes</div></div><div><span class="af-tag">Next up</span><div class="af-c n" style="--k:3"><i></i>Hiring logistics</div><div class="af-c n" style="--k:4"><i></i>Vendor follow-ups</div><div class="af-c n" style="--k:5"><i></i>Monthly reports</div></div></div></div></div>
 </div><div class="pf-panel" id="pf-p3" role="region" aria-label="Step 04: Handover and Documentation" hidden>
-<div class="pf-copy"><span class="pf-k">Step 04 &#xB7; Weeks 2&#x2013;4</span><h3>Handover and Documentation</h3><p>I take over tasks one at a time and write down each process as I learn it.</p><div class="pf-out"><span>You get</span><b>SOPs for your recurring work</b></div></div>
-<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x1F4C4;</span><div><b>SOP library</b><small>Written as I learn each task</small></div></div><div class="af-docs"><div class="af-d" style="--k:0"><span class="af-dn">SOP-01</span><b>Weekly calendar reset</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:1"><span class="af-dn">SOP-02</span><b>Inbox triage rules</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:2"><span class="af-dn">SOP-03</span><b>Travel booking</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:3"><span class="af-dn">SOP-04</span><b>New hire onboarding</b><span class="af-bar"><i style="--w:0.6"></i></span></div></div></div></div>
+<div class="pf-copy"><span class="pf-k">Step 04 &#xB7; Weeks 2&#x2013;4</span><h3>Handover and Documentation</h3><p>I take over tasks one at a time and keep simple notes on how each one is done.</p><div class="pf-out"><span>You get</span><b>Checklists for your recurring work</b></div></div>
+<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x1F4C4;</span><div><b>Task checklists</b><small>Written as I take each task over</small></div></div><div class="af-docs"><div class="af-d" style="--k:0"><span class="af-dn">01</span><b>Weekly calendar reset</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:1"><span class="af-dn">02</span><b>Inbox triage rules</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:2"><span class="af-dn">03</span><b>Travel booking</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:3"><span class="af-dn">04</span><b>New hire onboarding</b><span class="af-bar"><i style="--w:0.6"></i></span></div></div></div></div>
 </div><div class="pf-panel" id="pf-p4" role="region" aria-label="Step 05: Weekly Check-ins" hidden>
 <div class="pf-copy"><span class="pf-k">Step 05 &#xB7; Ongoing</span><h3>Weekly Check-ins</h3><p>A short check-in each week to go over what got done, what&#x2019;s stuck and what&#x2019;s coming up.</p><div class="pf-out"><span>You get</span><b>A weekly update, every week</b></div></div>
 <div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x2709;</span><div><b>Weekly update</b><small>Every Friday</small></div></div>
@@ -1503,7 +1497,7 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 <div class="container">
 <div class="reveal">
 <div class="eyebrow">Client voices</div>
-<h2>What it <em>feels</em> like to work with me.</h2>
+<h2>What it feels like to work with me.</h2>
 <p class="section-sub">Real words from real clients. Additional named references shared on request after the discovery call.</p>
 </div>
 <div class="qs reveal" id="qs">
@@ -1540,12 +1534,10 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 </button>
 <div class="about-card reveal">
 <div class="eyebrow">About me</div>
-<h2>I keep things running, even when you&#x2019;re <em>not around.</em></h2>
+<h2>I keep things running, even when you&#x2019;re not around.</h2>
 <div class="about-body">
-<p>Hi, I&#x2019;m Cio. For the past 5 years I&#x2019;ve worked with startups and medium-sized companies across the US, UK, Philippines and Australia, handling both the business and personal side of their leaders&#x2019; lives so things keep moving even when they&#x2019;re away.</p>
-<p>I know what it&#x2019;s like to watch a leader try to hold everything at once. That&#x2019;s the gap I fill, and I enjoy doing it.</p>
-<p>In that time I&#x2019;ve managed 20+ calendars, inboxes and projects, built SOPs that keep work moving without reminders, and given back hours every week to people whose time matters most. The systems you see here are the ones I use every day.</p>
-<p>Whether you&#x2019;re a founder who needs a right hand or a team that needs someone to keep operations steady, you&#x2019;re in the right place.</p>
+<p>Hi, I&#x2019;m Cio. I&#x2019;ve spent 5+ years as the right hand to founders and executives at startups and growing companies in the US, UK, Philippines and Australia.</p>
+<p>I&#x2019;ve run 20+ calendars and inboxes and handled travel, hiring and personal admin, so things keep moving when you&#x2019;re away. You get one person who owns the details, so you don&#x2019;t have to.</p>
 </div>
 <div class="about-soc"><span class="about-soc-k">Find me on</span><div class="about-soc-l"><a class="soc" href="https://www.linkedin.com/in/dennis-muring-411164217/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg><span>LinkedIn</span></a></div></div>
 <a href="#contact" class="btn btn-primary">Let&#x2019;s talk about how I can help <span class="arrow">&#x2192;</span></a>
@@ -1593,7 +1585,7 @@ header.hero.hero2{min-height:auto;padding:calc(var(--nav-h) + clamp(28px,5vh,64p
 <div class="stats-grid">
 <div class="stat-card reveal"><div class="stat-num"><span data-count="5">0</span>+</div><div class="stat-label">Years supporting executives, founders and business owners</div></div>
 <div class="stat-card reveal"><div class="stat-num"><span data-count="20">0</span>+</div><div class="stat-label">Calendars, inboxes and projects managed</div></div>
-<div class="stat-card reveal"><div class="stat-num"><span data-count="10">0</span>+</div><div class="stat-label">SOPs built so work runs without reminders</div></div>
+<div class="stat-card reveal"><div class="stat-num"><span data-count="24">0</span>h</div><div class="stat-label">Turnaround on everyday requests</div></div>
 <div class="stat-card reveal"><div class="stat-num"><span data-count="40">0</span>%</div><div class="stat-label">Fewer scheduling conflicts once I take over a calendar</div></div>
 </div>
 <div class="report-dl reveal">
