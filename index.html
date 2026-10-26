@@ -89,7 +89,7 @@ h2{font-family:'Manrope',system-ui,sans-serif;font-size:clamp(32px,4.2vw,48px);l
 .service{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px;transition:all .35s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
 .service::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(var(--accent-rgb),0.18) 0%,rgba(var(--accent-rgb),0.18) 100%);opacity:0;transition:opacity .35s;z-index:0}
 .service:hover{transform:translateY(-8px);box-shadow:0 25px 50px -15px rgba(var(--shadow-rgb),0.65);border-color:var(--accent-ink)}
-.service:hover::before{opacity:1}
+.service:hover::before{opacity:0}
 .service > *{position:relative;z-index:1}
 .service .icon{width:52px;height:52px;border-radius:14px;background:rgba(var(--accent-rgb),0.16);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px;transition:all .35s}
 .service:hover .icon{background:var(--accent);transform:rotate(-6deg) scale(1.1)}
@@ -98,8 +98,8 @@ h2{font-family:'Manrope',system-ui,sans-serif;font-size:clamp(32px,4.2vw,48px);l
 .service ul{list-style:none}
 .service li{font-size:14px;color:var(--muted);padding-left:24px;position:relative;margin-bottom:7px}
 .service li::before{content:"";position:absolute;left:0;top:7px;width:14px;height:8px;border-left:2px solid var(--accent-ink);border-bottom:2px solid var(--accent-ink);transform:rotate(-45deg)}
-.process{background:linear-gradient(160deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:32px;padding:60px 48px;margin:0 28px;position:relative;overflow:hidden}
-.process::before{content:"";position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(var(--muted-rgb),0.18),transparent 60%);animation:float 16s ease-in-out infinite}
+.process{max-width:var(--max);margin:0 auto;padding:0 28px;position:relative}
+.process::before{display:none;content:"";position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(var(--muted-rgb),0.18),transparent 60%);animation:float 16s ease-in-out infinite}
 .process > *{position:relative;z-index:1}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:40px}
 @media(max-width:880px){.steps{grid-template-columns:repeat(2,1fr)}}
@@ -622,6 +622,104 @@ html.intro-lock,html.intro-lock body{overflow:hidden}
 }
 @media(prefers-reduced-motion:reduce){.intro{display:none!important}}
 
+
+/* services: overlay slides in from the side the pointer enters */
+.svc-ov{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;padding:28px 26px;color:var(--text);
+  background:linear-gradient(150deg,var(--surface-2) 0%,var(--surface) 60%,var(--bg) 100%);box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),.5),inset 0 3px 0 var(--accent);border-radius:20px;
+  transform:translate3d(-101%,0,0);transition:transform 520ms cubic-bezier(.32,.72,0,1);will-change:transform;pointer-events:none}
+.service>.svc-ov{position:absolute;z-index:3}
+.svc-ov-k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.service .svc-ov-who{font-size:15px;color:var(--text);font-weight:600;margin:0 0 22px}
+.service .svc-ov-v{font-family:'Manrope',system-ui,sans-serif;font-size:21px;line-height:1.3;font-weight:700;color:var(--accent-ink);margin:0}
+.svc-ov-w{margin-top:auto;font-size:12.5px;color:var(--muted)}
+.service .svc-hint{display:block;margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent-ink)}
+@media(prefers-reduced-motion:reduce){.svc-ov{transition:none}}
+
+/* ===== Process flow ===== */
+.pflow{margin-top:40px;--n:5;--p:0}
+.pf-rail{position:relative}
+.pf-line{position:absolute;left:10%;right:10%;top:24px;height:3px;border-radius:3px;background:rgba(var(--muted-rgb),.25)}
+.pf-fill{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--accent-hover,var(--accent)));transform-origin:0 50%;transform:scaleX(var(--p));transition:transform .9s cubic-bezier(.65,0,.35,1)}
+.pf-pkt{position:absolute;top:50%;left:calc(var(--p) * 100%);width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(var(--accent-rgb),.25),0 0 18px rgba(var(--accent-rgb),.7);transition:left .9s cubic-bezier(.65,0,.35,1)}
+.pf-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);position:relative}
+.pf-node{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;width:100%;padding:0 6px 6px;border-radius:14px}
+.pf-node:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.pf-dotn{position:relative;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:2px solid rgba(var(--muted-rgb),.4);color:var(--muted);font-family:'Manrope',system-ui,sans-serif;font-weight:800;font-size:15px;
+  transition:background-color .4s,border-color .4s,color .4s,transform .5s cubic-bezier(.34,1.56,.64,1);margin-bottom:8px}
+.pf-dotn>span{grid-area:1/1;transition:opacity .3s,transform .3s}
+.pf-ok{opacity:0;transform:scale(.5);width:20px;height:20px}.pf-ok svg{width:100%;height:100%}
+.pf-node.done .pf-dotn{background:rgba(var(--accent-rgb),.18);border-color:var(--accent);color:var(--accent-ink)}
+.pf-node.done .pf-num{opacity:0;transform:scale(.5)}.pf-node.done .pf-ok{opacity:1;transform:none}
+.pf-node[aria-pressed="true"] .pf-dotn{background:var(--accent);border-color:var(--accent);color:var(--on-accent);transform:scale(1.12)}
+.pf-node[aria-pressed="true"] .pf-dotn::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(var(--accent-rgb),.55);animation:pf-ping 1.6s ease-out infinite}
+@keyframes pf-ping{0%{transform:scale(.85);opacity:1}100%{transform:scale(1.35);opacity:0}}
+.pf-when{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pf-t{font-size:15px;font-weight:700;color:var(--text);line-height:1.3;opacity:.6;transition:opacity .3s}
+.pf-node[aria-pressed="true"] .pf-t,.pf-node.done .pf-t,.pf-node:hover .pf-t{opacity:1}
+.pf-loop{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin:14px 10% 0 0;font-size:12px;font-weight:600;color:var(--muted)}
+.pf-loop svg{width:15px;height:15px;color:var(--accent-ink);animation:pf-spin 6s linear infinite}
+@keyframes pf-spin{to{transform:rotate(-360deg)}}
+.pf-stage{position:relative;margin-top:22px;min-height:290px}
+.pf-panel{display:grid;grid-template-columns:1fr 1.05fr;gap:36px;align-items:center;padding:30px 32px;border-radius:22px;background:rgba(var(--bg-rgb),.45);border:1px solid var(--line)}
+.pf-panel[hidden]{display:none}
+.pf-panel.on{animation:pf-in .6s cubic-bezier(.22,1,.36,1)}
+@keyframes pf-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.pf-k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+.pf-copy h3{font-family:'Manrope',system-ui,sans-serif;font-size:clamp(22px,2.2vw,28px);font-weight:800;letter-spacing:-.02em;color:var(--text);margin:8px 0 10px}
+.pf-copy p{color:var(--muted);font-size:16px;line-height:1.6;margin:0 0 18px}
+.pf-out{display:inline-flex;flex-direction:column;gap:2px;padding:10px 14px;border-radius:12px;background:rgba(var(--accent-rgb),.12);border:1px solid rgba(var(--accent-rgb),.35)}
+.pf-out span{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pf-out b{color:var(--accent-ink);font-size:15px}
+/* output artifact */
+.af{border-radius:16px;background:var(--surface);border:1px solid rgba(var(--text-rgb),.12);box-shadow:0 22px 46px -22px rgba(var(--shadow-rgb),.55);padding:18px 18px 20px;color:var(--text);font-size:14px}
+.af-h{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.af-h b{display:block;font-size:15px}.af-h small{color:var(--muted);font-size:12px}
+.af-av,.af-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none;background:rgba(var(--accent-rgb),.18);color:var(--accent-ink);font-weight:800;font-size:13px}
+.af-av{border-radius:50%;background:var(--accent);color:var(--on-accent)}
+.af-ic svg{width:18px;height:18px}
+.af-rows{display:grid;gap:9px}
+.af-r{display:grid;grid-template-columns:9.5em 1fr;gap:10px;font-size:13px}
+.af-r span{color:var(--muted)}.af-r b{font-weight:600}
+.af-list,.af-docs{display:grid;gap:8px}
+.af-c{display:flex;align-items:center;gap:9px;font-size:13.5px}
+.af-c i{width:18px;height:18px;border-radius:5px;flex:none;display:grid;place-items:center;background:var(--accent);color:var(--on-accent)}
+.af-c i svg{width:12px;height:12px}
+.af-c.n i{background:transparent;border:1.5px solid rgba(var(--muted-rgb),.6)}
+.af-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}.af-cols>div{display:grid;gap:8px;align-content:start}
+.af-tag{justify-self:start;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(var(--muted-rgb),.16);color:var(--muted)}
+.af-tag.y{background:rgba(var(--accent-rgb),.2);color:var(--accent-ink)}
+.af-d{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center}
+.af-dn{grid-row:span 2;font-size:11px;font-weight:800;padding:6px 7px;border-radius:7px;background:rgba(var(--accent-rgb),.16);color:var(--accent-ink)}
+.af-d b{font-size:13.5px;font-weight:600}
+.af-bar{height:4px;border-radius:4px;background:rgba(var(--muted-rgb),.2);overflow:hidden}
+.af-bar i{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+.af-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.af-kpis>div{padding:9px 10px;border-radius:10px;background:rgba(var(--muted-rgb),.1)}
+.af-kpis>div.y{background:rgba(var(--accent-rgb),.2)}
+.af-kpis b{display:block;font-family:'Manrope',system-ui,sans-serif;font-size:22px;font-weight:800}.af-kpis span{font-size:11.5px;color:var(--muted)}
+/* staggered build-in of each artifact */
+.pf-panel .af-r,.pf-panel .af-c,.pf-panel .af-d,.pf-panel .af-kpis>div{opacity:0;transform:translateY(8px)}
+.pf-panel.on .af-r,.pf-panel.on .af-c,.pf-panel.on .af-d,.pf-panel.on .af-kpis>div{animation:af-in .45s cubic-bezier(.22,1,.36,1) calc(.25s + var(--k) * .14s) forwards}
+.pf-panel.on .af-bar i{animation:af-bar .8s cubic-bezier(.65,0,.35,1) calc(.5s + var(--k,0) * .14s) forwards}
+@keyframes af-in{to{opacity:1;transform:none}}
+@keyframes af-bar{to{transform:scaleX(var(--w))}}
+/* autoplay timer on the active node */
+.pflow.auto .pf-node[aria-pressed="true"] .pf-when{background:linear-gradient(90deg,var(--accent-ink) var(--tp,0%),var(--muted) var(--tp,0%));-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:860px){
+  .pf-panel{grid-template-columns:1fr;gap:22px;padding:22px 20px}
+  .pf-t{font-size:12.5px}.pf-when{display:none}
+  .pf-dotn{width:40px;height:40px;font-size:13px}
+  .pf-line{top:19px}
+  .pf-loop{justify-content:center;margin-right:0}
+}
+@media(max-width:480px){.pf-t{display:none}.af-r{grid-template-columns:1fr;gap:0}}
+@media(prefers-reduced-motion:reduce){
+  .pf-fill,.pf-pkt{transition:none}.pf-panel.on{animation:none}
+  .pf-panel .af-r,.pf-panel .af-c,.pf-panel .af-d,.pf-panel .af-kpis>div{opacity:1;transform:none;animation:none!important}
+  .pf-panel .af-bar i{transform:scaleX(var(--w));animation:none!important}
+  .pf-node[aria-pressed="true"] .pf-dotn::after,.pf-loop svg{animation:none}
+}
+
 .tw-bar{display:inline-block;width:3px;height:.82em;margin-left:.08em;border-radius:3px;background:var(--accent);vertical-align:-.06em}
 
 /* ===== Client voices: typed testimonial ===== */
@@ -832,8 +930,8 @@ header.hero.tilt{position:relative;height:200vh;padding:0;overflow:visible}
 /* 30% cobalt: headings + feature blocks */
 :root[data-theme="light"] h1,:root[data-theme="light"] h2{color:var(--secondary)}
 :root[data-theme="light"] .blob.b1,:root[data-theme="light"] .blob.b3{background:rgba(48,78,36,.18)}
-:root[data-theme="light"] .hero-card,:root[data-theme="light"] .process,:root[data-theme="light"] .stat-card,:root[data-theme="light"] .impact-panel,:root[data-theme="light"] .cta-block,:root[data-theme="light"] .footer-cta{--bg:#223A19;--surface:#304E24;--surface-2:#273F1D;--text:#F0F2EB;--muted:#CBD5C0;--secondary:#F0F2EB;--accent-ink:#E8D562;--bg-rgb:34,58,25;--surface-rgb:48,78,36;--text-rgb:240,242,235;--muted-rgb:203,213,192;--line:rgba(240,242,235,.22);--line-soft:rgba(240,242,235,.14);color:var(--text)}
-:root[data-theme="light"] .hero-card h2,:root[data-theme="light"] .process h2,:root[data-theme="light"] .cta-block h2,:root[data-theme="light"] .footer-cta h2{color:var(--text)}
+:root[data-theme="light"] .hero-card,:root[data-theme="light"] .stat-card,:root[data-theme="light"] .impact-panel,:root[data-theme="light"] .cta-block,:root[data-theme="light"] .footer-cta{--bg:#223A19;--surface:#304E24;--surface-2:#273F1D;--text:#F0F2EB;--muted:#CBD5C0;--secondary:#F0F2EB;--accent-ink:#E8D562;--bg-rgb:34,58,25;--surface-rgb:48,78,36;--text-rgb:240,242,235;--muted-rgb:203,213,192;--line:rgba(240,242,235,.22);--line-soft:rgba(240,242,235,.14);color:var(--text)}
+:root[data-theme="light"] .hero-card h2,:root[data-theme="light"] .cta-block h2,:root[data-theme="light"] .footer-cta h2{color:var(--text)}
 :root{color-scheme:dark}
 :root[data-theme="light"] :root[data-theme="light"] .avatar{color:#fff}
 html.theme-anim,html.theme-anim *{transition:background-color .35s ease,color .35s ease,border-color .35s ease!important}
@@ -870,7 +968,7 @@ nav .container{position:relative}
 /* ===== Wide layout: content fills ~80% of the screen, leaving ~20% white space ===== */
 @media(min-width:1100px){
   .container{max-width:min(80vw,1760px);padding:0}
-  .process{max-width:min(80vw,1760px);margin:0 auto}
+  .process{max-width:min(80vw,1760px);margin:0 auto;padding:0}
   h2{max-width:1040px}
   .section-sub{max-width:860px}
   .aud-copy{max-width:none}
@@ -1133,6 +1231,8 @@ nav .container{position:relative}
 <li>Personal and VIP relationship support</li>
 <li>AI-assisted briefs and recaps via Claude.ai</li>
 </ul>
+<span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Founders and CEOs buried in email and meetings</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">A protected calendar, an inbox you can trust, and hours back every week</p><span class="svc-ov-w">Executive Assistant</span></div>
 </div>
 <div class="service reveal" tabindex="0" style="--d:2s">
 <div class="icon fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fi-bolt" d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12l1-8z"/></svg></div>
@@ -1145,6 +1245,8 @@ nav .container{position:relative}
 <li>Reporting dashboards and KPIs</li>
 <li>AI-drafted documentation and process maps</li>
 </ul>
+<span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Teams whose processes live in one person&#x2019;s head</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">Written SOPs, clean data and reports you can run without chasing anyone</p><span class="svc-ov-w">Operations Assistant</span></div>
 </div>
 <div class="service reveal" tabindex="0" style="--d:4s">
 <div class="icon fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="fi-bell"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2H4.5z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></g></svg></div>
@@ -1157,6 +1259,8 @@ nav .container{position:relative}
 <li>Onboarding, credentialing, and compliance</li>
 <li>Viktor.ai automated sourcing and screening</li>
 </ul>
+<span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Staffing agencies and fast-growing teams</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">A full pipeline, faster time-to-hire and onboarding that runs on a checklist</p><span class="svc-ov-w">Recruiting and Talent Ops</span></div>
 </div>
 <div class="service reveal" tabindex="0" style="--d:6s">
 <div class="icon fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path class="fi-check" pathLength="1" d="M8 12.5l2.8 2.8L16.2 9.6"/></svg></div>
@@ -1169,6 +1273,8 @@ nav .container{position:relative}
 <li>Genesys, Amazon Connect, OpenPhone, Zendesk</li>
 <li>AI-assisted reply drafts and escalation tagging</li>
 </ul>
+<span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Online stores and service brands</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">Every ticket answered, refunds handled and warm leads followed up the same day</p><span class="svc-ov-w">Customer Service and Inbound Sales</span></div>
 </div>
 <div class="service reveal" tabindex="0" style="--d:8s">
 <div class="icon fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fi-bolt" d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12l1-8z"/></svg></div>
@@ -1181,6 +1287,8 @@ nav .container{position:relative}
 <li>Community management and DM triage</li>
 <li>AI-generated assets via Creatify and Claude.ai</li>
 </ul>
+<span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Brands that need to show up daily</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">A content calendar that posts on schedule, plus DMs and comments answered</p><span class="svc-ov-w">Social Media Management</span></div>
 </div>
 <div class="service reveal" tabindex="0" style="--d:10s">
 <div class="icon fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="fi-bell"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2H4.5z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></g></svg></div>
@@ -1193,6 +1301,8 @@ nav .container{position:relative}
 <li>Inbox, lead, and reporting automations</li>
 <li>Hand-off ready playbooks for your team</li>
 </ul>
+<span class="svc-hint" aria-hidden="true">Who it&#x2019;s for &#x2192;</span>
+<div class="svc-ov" aria-hidden="true"><span class="svc-ov-k">Best for</span><p class="svc-ov-who">Teams ready to automate the busywork</p><span class="svc-ov-k">What you get</span><p class="svc-ov-v">Repeatable AI workflows and playbooks your team can hand off and reuse</p><span class="svc-ov-w">AI-Powered Workflows</span></div>
 </div>
 </div>
 <div class="svc-dots" id="svcDots"></div>
@@ -1205,22 +1315,33 @@ nav .container{position:relative}
 <div class="process">
 <div class="eyebrow">How we work together</div>
 <h2>What happens after you hire me.</h2>
-<ol class="pgrid"><li class="pcard" tabindex="0" aria-label="Step 01: Discovery Call, Day 1. We talk about your goals, what's slowing you down, and how you like to work and communicate. Output: A one-page client profile">
-<div class="pcard-base"><span class="pcard-n">01</span><span class="pcard-when">Day 1</span><h4>Discovery Call</h4><p>We talk about your goals, what's slowing you down, and how you like to work and communicate.</p><span class="pcard-hint" aria-hidden="true">Output &#x2192;</span></div>
-<div class="pcard-ov" aria-hidden="true"><span class="pcard-ov-k">Step 01 output</span><p class="pcard-ov-v">A one-page client profile</p><span class="pcard-ov-w">Discovery Call &#xb7; Day 1</span></div>
-</li><li class="pcard" tabindex="0" aria-label="Step 02: Access and Setup, Days 1&#x2013;3. I get access to your email, calendar, drives and tools. We agree on how and when we'll communicate. Output: A confirmed access checklist">
-<div class="pcard-base"><span class="pcard-n">02</span><span class="pcard-when">Days 1&#x2013;3</span><h4>Access and Setup</h4><p>I get access to your email, calendar, drives and tools. We agree on how and when we'll communicate.</p><span class="pcard-hint" aria-hidden="true">Output &#x2192;</span></div>
-<div class="pcard-ov" aria-hidden="true"><span class="pcard-ov-k">Step 02 output</span><p class="pcard-ov-v">A confirmed access checklist</p><span class="pcard-ov-w">Access and Setup &#xb7; Days 1&#x2013;3</span></div>
-</li><li class="pcard" tabindex="0" aria-label="Step 03: Review Your Workload, Week 1. I go through your calendar, inbox and recurring tasks to see what's eating your time and what I can take on first. Output: A list of what I'll handle now and what comes next">
-<div class="pcard-base"><span class="pcard-n">03</span><span class="pcard-when">Week 1</span><h4>Review Your Workload</h4><p>I go through your calendar, inbox and recurring tasks to see what's eating your time and what I can take on first.</p><span class="pcard-hint" aria-hidden="true">Output &#x2192;</span></div>
-<div class="pcard-ov" aria-hidden="true"><span class="pcard-ov-k">Step 03 output</span><p class="pcard-ov-v">A list of what I'll handle now and what comes next</p><span class="pcard-ov-w">Review Your Workload &#xb7; Week 1</span></div>
-</li><li class="pcard" tabindex="0" aria-label="Step 04: Handover and Documentation, Weeks 2&#x2013;4. I take over tasks one at a time and write down each process as I learn it. Output: SOPs for your recurring work">
-<div class="pcard-base"><span class="pcard-n">04</span><span class="pcard-when">Weeks 2&#x2013;4</span><h4>Handover and Documentation</h4><p>I take over tasks one at a time and write down each process as I learn it.</p><span class="pcard-hint" aria-hidden="true">Output &#x2192;</span></div>
-<div class="pcard-ov" aria-hidden="true"><span class="pcard-ov-k">Step 04 output</span><p class="pcard-ov-v">SOPs for your recurring work</p><span class="pcard-ov-w">Handover and Documentation &#xb7; Weeks 2&#x2013;4</span></div>
-</li><li class="pcard" tabindex="0" aria-label="Step 05: Weekly Check-ins, Ongoing. A short check-in each week to go over what got done, what's stuck and what's coming up. Output: A weekly update and a growing list of things off your plate">
-<div class="pcard-base"><span class="pcard-n">05</span><span class="pcard-when">Ongoing</span><h4>Weekly Check-ins</h4><p>A short check-in each week to go over what got done, what's stuck and what's coming up.</p><span class="pcard-hint" aria-hidden="true">Output &#x2192;</span></div>
-<div class="pcard-ov" aria-hidden="true"><span class="pcard-ov-k">Step 05 output</span><p class="pcard-ov-v">A weekly update and a growing list of things off your plate</p><span class="pcard-ov-w">Weekly Check-ins &#xb7; Ongoing</span></div>
-</li></ol>
+<div class="pflow" id="pflow">
+<div class="pf-rail">
+<div class="pf-line" aria-hidden="true"><i class="pf-fill"></i><span class="pf-pkt"></span></div>
+<ol class="pf-steps" aria-label="Process steps"><li><button type="button" class="pf-node" data-i="0" aria-pressed="true" aria-controls="pf-p0"><span class="pf-dotn"><span class="pf-num">01</span><span class="pf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></span><span class="pf-when">Day 1</span><span class="pf-t">Discovery Call</span></button></li><li><button type="button" class="pf-node" data-i="1" aria-pressed="false" aria-controls="pf-p1"><span class="pf-dotn"><span class="pf-num">02</span><span class="pf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></span><span class="pf-when">Days 1&#x2013;3</span><span class="pf-t">Access and Setup</span></button></li><li><button type="button" class="pf-node" data-i="2" aria-pressed="false" aria-controls="pf-p2"><span class="pf-dotn"><span class="pf-num">03</span><span class="pf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></span><span class="pf-when">Week 1</span><span class="pf-t">Review Your Workload</span></button></li><li><button type="button" class="pf-node" data-i="3" aria-pressed="false" aria-controls="pf-p3"><span class="pf-dotn"><span class="pf-num">04</span><span class="pf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></span><span class="pf-when">Weeks 2&#x2013;4</span><span class="pf-t">Handover and Documentation</span></button></li><li><button type="button" class="pf-node" data-i="4" aria-pressed="false" aria-controls="pf-p4"><span class="pf-dotn"><span class="pf-num">05</span><span class="pf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></span><span class="pf-when">Ongoing</span><span class="pf-t">Weekly Check-ins</span></button></li></ol>
+</div>
+<div class="pf-loop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>Step 05 repeats every week</div>
+<div class="pf-stage"><div class="pf-panel on" id="pf-p0" role="region" aria-label="Step 01: Discovery Call">
+<div class="pf-copy"><span class="pf-k">Step 01 &#xB7; Day 1</span><h3>Discovery Call</h3><p>We talk about your goals, what&#x2019;s slowing you down, and how you like to work and communicate.</p><div class="pf-out"><span>You get</span><b>A one-page client profile</b></div></div>
+<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-av">YC</span><div><b>Client profile</b><small>Founder &#xB7; US Eastern</small></div></div>
+<div class="af-rows"><div class="af-r" style="--k:0"><span>Goals</span><b>More time on sales and fundraising</b></div><div class="af-r" style="--k:1"><span>Slowing you down</span><b>Inbox, scheduling, hiring admin</b></div><div class="af-r" style="--k:2"><span>How you like to work</span><b>Slack for quick, email for decisions</b></div><div class="af-r" style="--k:3"><span>Check-in</span><b>Fridays, 15 minutes</b></div></div></div></div>
+</div><div class="pf-panel" id="pf-p1" role="region" aria-label="Step 02: Access and Setup" hidden>
+<div class="pf-copy"><span class="pf-k">Step 02 &#xB7; Days 1&#x2013;3</span><h3>Access and Setup</h3><p>I get access to your email, calendar, drives and tools. We agree on how and when we&#x2019;ll communicate.</p><div class="pf-out"><span>You get</span><b>A confirmed access checklist</b></div></div>
+<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><div><b>Access checklist</b><small>Shared via password manager</small></div></div><div class="af-list"><div class="af-c" style="--k:0"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Email (delegate access)</div><div class="af-c" style="--k:1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Calendar</div><div class="af-c" style="--k:2"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Google Drive</div><div class="af-c" style="--k:3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Slack</div><div class="af-c" style="--k:4"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Password manager</div><div class="af-c" style="--k:5"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Comms plan agreed</div></div></div></div>
+</div><div class="pf-panel" id="pf-p2" role="region" aria-label="Step 03: Review Your Workload" hidden>
+<div class="pf-copy"><span class="pf-k">Step 03 &#xB7; Week 1</span><h3>Review Your Workload</h3><p>I go through your calendar, inbox and recurring tasks to see what&#x2019;s eating your time and what I can take on first.</p><div class="pf-out"><span>You get</span><b>What I handle now, and what comes next</b></div></div>
+<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x2696;</span><div><b>Workload review</b><small>Week 1 findings</small></div></div>
+<div class="af-cols"><div><span class="af-tag y">Handle now</span><div class="af-c" style="--k:0"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Inbox triage</div><div class="af-c" style="--k:1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Calendar and travel</div><div class="af-c" style="--k:2"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Meeting notes</div></div><div><span class="af-tag">Next up</span><div class="af-c n" style="--k:3"><i></i>Hiring logistics</div><div class="af-c n" style="--k:4"><i></i>Vendor follow-ups</div><div class="af-c n" style="--k:5"><i></i>Monthly reports</div></div></div></div></div>
+</div><div class="pf-panel" id="pf-p3" role="region" aria-label="Step 04: Handover and Documentation" hidden>
+<div class="pf-copy"><span class="pf-k">Step 04 &#xB7; Weeks 2&#x2013;4</span><h3>Handover and Documentation</h3><p>I take over tasks one at a time and write down each process as I learn it.</p><div class="pf-out"><span>You get</span><b>SOPs for your recurring work</b></div></div>
+<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x1F4C4;</span><div><b>SOP library</b><small>Written as I learn each task</small></div></div><div class="af-docs"><div class="af-d" style="--k:0"><span class="af-dn">SOP-01</span><b>Weekly calendar reset</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:1"><span class="af-dn">SOP-02</span><b>Inbox triage rules</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:2"><span class="af-dn">SOP-03</span><b>Travel booking</b><span class="af-bar"><i style="--w:1"></i></span></div><div class="af-d" style="--k:3"><span class="af-dn">SOP-04</span><b>New hire onboarding</b><span class="af-bar"><i style="--w:0.6"></i></span></div></div></div></div>
+</div><div class="pf-panel" id="pf-p4" role="region" aria-label="Step 05: Weekly Check-ins" hidden>
+<div class="pf-copy"><span class="pf-k">Step 05 &#xB7; Ongoing</span><h3>Weekly Check-ins</h3><p>A short check-in each week to go over what got done, what&#x2019;s stuck and what&#x2019;s coming up.</p><div class="pf-out"><span>You get</span><b>A weekly update, every week</b></div></div>
+<div class="pf-art" aria-hidden="true"><div class="af"><div class="af-h"><span class="af-ic">&#x2709;</span><div><b>Weekly update</b><small>Every Friday</small></div></div>
+<div class="af-kpis"><div style="--k:0"><b>18</b><span>Done</span></div><div style="--k:1"><b>3</b><span>In progress</span></div><div style="--k:2" class="y"><b>2</b><span>Need you</span></div></div>
+<div class="af-list"><div class="af-c" style="--k:3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Board deck formatted</div><div class="af-c" style="--k:4"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Q4 offsite booked</div><div class="af-c" style="--k:5"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i>Two interviews scheduled</div></div></div></div>
+</div></div>
+</div>
 </div>
 </section>
 <section id="voices">
@@ -1502,11 +1623,11 @@ nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('cli
 <script>
 (function(){
   var OFF={left:'translate3d(-101%,0,0)',right:'translate3d(101%,0,0)',top:'translate3d(0,-101%,0)',bottom:'translate3d(0,101%,0)'};
-  var cards=document.querySelectorAll('.pgrid .pcard');
+  var cards=document.querySelectorAll('.services-track .service');
   function side(el,e){var r=el.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;
     return Math.abs(dx)>Math.abs(dy)?(dx<0?'left':'right'):(dy<0?'top':'bottom');}
-  function enter(el,s){var ov=el.querySelector('.pcard-ov');ov.style.transition='none';ov.style.transform=OFF[s];void ov.offsetWidth;ov.style.transition='';ov.style.transform='none';el.classList.add('is-on');}
-  function leave(el,s){el.querySelector('.pcard-ov').style.transform=OFF[s];el.classList.remove('is-on');}
+  function enter(el,s){var ov=el.querySelector('.svc-ov');ov.style.transition='none';ov.style.transform=OFF[s];void ov.offsetWidth;ov.style.transition='';ov.style.transform='none';el.classList.add('is-on');}
+  function leave(el,s){el.querySelector('.svc-ov').style.transform=OFF[s];el.classList.remove('is-on');}
   cards.forEach(function(el){
     var hovered=false;
     el.addEventListener('pointerenter',function(e){if(e.pointerType==='touch')return;hovered=true;enter(el,side(el,e));});
@@ -1781,6 +1902,29 @@ setFav();
   at(t+2750,finish);
   skip.addEventListener('click',finish);
   document.addEventListener('keydown',function k(e){if(e.key==='Escape'){finish();document.removeEventListener('keydown',k);}});
+})();
+</script>
+<script>
+(function(){ /* process flow */
+  var root=document.getElementById('pflow');if(!root)return;
+  var nodes=[].slice.call(root.querySelectorAll('.pf-node')),panels=[].slice.call(root.querySelectorAll('.pf-panel')),N=nodes.length,cur=0,MS=4200,
+      reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches,timer=0,start=0,raf=0,paused=false,visible=false;
+  function go(i){cur=(i+N)%N;root.style.setProperty('--p',(cur/(N-1)).toFixed(4));
+    nodes.forEach(function(n,k){n.setAttribute('aria-pressed',k===cur?'true':'false');n.classList.toggle('done',k<cur);});
+    panels.forEach(function(p,k){if(k===cur){p.hidden=false;p.classList.remove('on');void p.offsetWidth;p.classList.add('on');}else{p.hidden=true;p.classList.remove('on');}});
+    start=performance.now();}
+  function tick(t){raf=requestAnimationFrame(tick);if(paused||!visible){start=t-(root._el||0);return;}
+    var el=t-start;root._el=el;root.style.setProperty('--tp',Math.min(100,el/MS*100).toFixed(1)+'%');if(el>=MS)go(cur+1);}
+  nodes.forEach(function(n,k){n.addEventListener('click',function(){go(k);});});
+  root.addEventListener('keydown',function(e){if(!e.target.classList.contains('pf-node'))return;
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();go(cur+(e.key==='ArrowRight'?1:-1));nodes[cur].focus();}});
+  go(0);
+  if(reduce)return;
+  root.classList.add('auto');
+  root.addEventListener('mouseenter',function(){paused=true;});root.addEventListener('mouseleave',function(){paused=false;});
+  root.addEventListener('focusin',function(){paused=true;});root.addEventListener('focusout',function(){paused=false;});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(e){var was=visible;visible=e[0].isIntersecting;if(visible&&!was)go(0);},{threshold:.35}).observe(root);else visible=true;
+  raf=requestAnimationFrame(tick);
 })();
 </script>
 </body>
