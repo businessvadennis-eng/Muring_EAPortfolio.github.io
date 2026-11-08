@@ -398,7 +398,7 @@ section { padding: 96px 0; }
 .who-label {
   display: block;
   font-family: 'Sora', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--foreground);
   margin-bottom: 0;
@@ -406,15 +406,11 @@ section { padding: 96px 0; }
 }
 .who-trigger:hover .who-label { color: var(--primary); }
 .who-reveal-card {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, margin 0.3s ease, opacity 0.3s ease;
-  opacity: 0;
+  display: none;
 }
 .who-trigger:hover .who-reveal-card {
-  max-height: 220px;
-  opacity: 1;
-  margin-top: 16px;
+  display: block;
+  margin-top: 14px;
 }
 .who-pain {
   font-size: 13px;
